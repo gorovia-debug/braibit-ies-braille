@@ -107,10 +107,10 @@ const BraiBitEcosystem = () => {
 
   const initializeData = () => {
     const initialTutors = [
-      { id: 1, name: "Tutor/a 1º ESO", email: "tutor1eso@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 2, name: "Tutor/a 2º ESO", email: "tutor2eso@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 3, name: "Tutor/a 3º ESO", email: "tutor3eso@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 4, name: "Tutor/a 4º ESO", email: "tutor4eso@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
+      { id: 1, name: "Tutor/a 1", email: "tutor1@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 2, name: "Tutor/a 2", email: "tutor2@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 3, name: "Tutor/a 3", email: "tutor3@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 4, name: "Tutor/a 4", email: "tutor4@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
     ];
 
     const initialStudents = [
