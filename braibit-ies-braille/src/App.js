@@ -698,17 +698,7 @@ const LoginScreen = ({ onLogin }) => {
           </div>
         )}
 
-        {userType === 'tutor' && (
-          <div className="mt-6 bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
-            <p className="text-xs text-blue-200 mb-2 font-semibold">Cuentas de tutor registradas:</p>
-            <div className="space-y-1 text-xs text-gray-300">
-              <p>• tutor1eso@iesluisbraille.edu</p>
-              <p>• tutor2eso@iesluisbraille.edu</p>
-              <p>• tutor3eso@iesluisbraille.edu</p>
-              <p>• tutor4eso@iesluisbraille.edu</p>
-            </div>
-          </div>
-        )}
+
       </div>
     </div>
   );
