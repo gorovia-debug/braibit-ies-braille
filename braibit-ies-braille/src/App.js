@@ -1154,7 +1154,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
             >
               <option value="">-- Elige un alumno --</option>
               {users
-                .filter(student => !student.tutorId || (currentUser && student.tutorId === currentUser.id))
+                .filter(student => !student.tutorId || student.tutorId === currentUser.id)
                 .map(student => (
                 <option key={student.id} value={student.id}>
                   {student.name} {student.group ? `(${student.group})` : `(${student.class})`} - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
