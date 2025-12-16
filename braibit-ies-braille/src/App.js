@@ -1207,7 +1207,6 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
                 <option key={task.id} value={task.id} style={{ backgroundColor: '#1f2937', color: 'white' }}>
                   {task.name} - {task.reward} {CURRENCY_SYMBOL} ({task.category})
                 </option>
-                </option>
               ))}
             </select>
           </div>
