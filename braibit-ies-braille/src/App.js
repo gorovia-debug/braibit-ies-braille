@@ -72,7 +72,6 @@ const BraiBitEcosystem = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [copied, setCopied] = useState(false);
   const [selectedTab, setSelectedTab] = useState('overview');
-  const [selectedGroup, setSelectedGroup] = useState(''); // Nuevo: filtro por grupo
   const [showCNMVWarning, setShowCNMVWarning] = useState(true);
 
   const CURRENCY_NAME = "BraiBit";
@@ -1146,65 +1145,34 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
         </h3>
 
         <div className="space-y-4">
-          {/* NUEVO: Selector de Grupos */}
           <div>
-            <label className="block text-gray-300 text-sm mb-2 font-semibold">📚 Filtrar por Grupo</label>
-            <select
-              value={selectedGroup}
-              onChange={(e) => {
-                setSelectedGroup(e.target.value);
-                setSelectedStudent(null); // Reset alumno cuando cambia grupo
-              }}
-              className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
-              style={{ color: 'white' }}
-            >
-              <option value="" style={{ backgroundColor: '#1f2937', color: 'white' }}>-- Todos los grupos --</option>
-              <option value="DEMO" style={{ backgroundColor: '#1f2937', color: 'white' }}>🎓 DEMO (Práctica)</option>
-              <option value="AD-1" style={{ backgroundColor: '#1f2937', color: 'white' }}>📘 AD-1 (17 alumnos)</option>
-              <option value="AD-2" style={{ backgroundColor: '#1f2937', color: 'white' }}>📗 AD-2 (14 alumnos)</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-gray-300 text-sm mb-2 font-semibold">
-              👤 Selecciona Alumno/a
-              {selectedGroup && <span className="text-purple-400 ml-2">({selectedGroup})</span>}
-            </label>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Selecciona Alumno/a</label>
             <select
               value={selectedStudent || ''}
               onChange={(e) => setSelectedStudent(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
-              style={{ color: 'white' }}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
-              <option value="" style={{ backgroundColor: '#1f2937', color: 'white' }}>
-                -- Elige un alumno {selectedGroup ? `de ${selectedGroup}` : ''} --
-              </option>
+              <option value="">-- Elige un alumno --</option>
               {users
-                .filter(student => !selectedGroup || student.group === selectedGroup)
+                .filter(student => !student.tutorId || (currentUser && student.tutorId === currentUser.id))
                 .map(student => (
-                <option key={student.id} value={student.id} style={{ backgroundColor: '#1f2937', color: 'white' }}>
+                <option key={student.id} value={student.id}>
                   {student.name} {student.group ? `(${student.group})` : `(${student.class})`} - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
                 </option>
               ))}
             </select>
-            {selectedGroup && (
-              <p className="text-xs text-gray-400 mt-1">
-                Mostrando {users.filter(s => s.group === selectedGroup).length} alumno(s) del grupo {selectedGroup}
-              </p>
-            )}
           </div>
 
           <div>
-            <label className="block text-gray-300 text-sm mb-2 font-semibold">⭐ Selecciona Tarea</label>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Selecciona Tarea</label>
             <select
               value={selectedTask || ''}
               onChange={(e) => setSelectedTask(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
-              style={{ color: 'white' }}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
-              <option value="" style={{ backgroundColor: '#1f2937', color: 'white' }}>-- Elige una tarea --</option>
+              <option value="">-- Elige una tarea --</option>
               {tasks.map(task => (
-                <option key={task.id} value={task.id} style={{ backgroundColor: '#1f2937', color: 'white' }}>
+                <option key={task.id} value={task.id}>
                   {task.name} - {task.reward} {CURRENCY_SYMBOL} ({task.category})
                 </option>
               ))}
