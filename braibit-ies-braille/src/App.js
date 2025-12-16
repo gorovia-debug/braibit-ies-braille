@@ -1991,5 +1991,3 @@ const InfoView = ({
     </div>
   );
 };
-
-
