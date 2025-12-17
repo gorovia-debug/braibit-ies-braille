@@ -6,6 +6,7 @@ import {
   Coins, Shield, Globe, FileText, ChevronRight, Menu, X,
   TrendingDown, Clock, Zap, Star, Gift, ArrowUpRight, ArrowDownRight
 } from 'lucide-react';
+import { saveUsers, getUsers, saveBlockchain, getBlockchain, saveTasks, getTasks, saveProducts, getProducts, subscribeToUsers, subscribeToBlockchain } from './firebaseOperations';
 
 // ============================================
 // UTILIDADES Y HELPERS
@@ -82,15 +83,66 @@ const BraiBitEcosystem = () => {
   const EUR_USD_RATE = 0.92; // 1 USD = 0.92 EUR (aprox)
 
   useEffect(() => {
-    initializeData();
+    // Cargar datos desde Firebase
+    const loadData = async () => {
+      try {
+        // Intentar cargar usuarios desde Firebase
+        const firebaseUsers = await getUsers();
+        
+        if (firebaseUsers && firebaseUsers.length > 0) {
+          // Si hay datos en Firebase, usarlos
+          setUsers(firebaseUsers);
+        } else {
+          // Primera vez - inicializar con datos por defecto
+          await initializeData();
+        }
+
+        // Cargar blockchain
+        const firebaseBlockchain = await getBlockchain();
+        if (firebaseBlockchain && firebaseBlockchain.length > 0) {
+          setBlocks(firebaseBlockchain);
+        }
+
+        // Cargar tareas
+        const firebaseTasks = await getTasks();
+        if (firebaseTasks && firebaseTasks.length > 0) {
+          setTasks(firebaseTasks);
+        }
+
+        // Cargar productos
+        const firebaseProducts = await getProducts();
+        if (firebaseProducts && firebaseProducts.length > 0) {
+          setStoreItems(firebaseProducts);
+        }
+      } catch (error) {
+        console.error('Error loading data from Firebase:', error);
+        // Si hay error, inicializar con datos por defecto
+        await initializeData();
+      }
+    };
+
+    loadData();
     fetchBitcoinPrice();
     startPriceSimulation();
     startBlockMining();
     
+    // Suscribirse a cambios en tiempo real
+    const unsubscribeUsers = subscribeToUsers((updatedUsers) => {
+      setUsers(updatedUsers);
+    });
+
+    const unsubscribeBlockchain = subscribeToBlockchain((updatedBlockchain) => {
+      setBlocks(updatedBlockchain);
+    });
+    
     // Actualizar precio Bitcoin cada 30 segundos
     const btcInterval = setInterval(fetchBitcoinPrice, 30000);
     
-    return () => clearInterval(btcInterval);
+    return () => {
+      clearInterval(btcInterval);
+      unsubscribeUsers();
+      unsubscribeBlockchain();
+    };
   }, []);
 
   // Obtener precio real de Bitcoin
@@ -106,7 +158,7 @@ const BraiBitEcosystem = () => {
     }
   };
 
-  const initializeData = () => {
+  const initializeData = async () => {
     const initialTutors = [
       { id: 1, name: "Tutor/a 1", email: "tutor1@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
       { id: 2, name: "Tutor/a 2", email: "tutor2@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
@@ -207,6 +259,13 @@ const BraiBitEcosystem = () => {
     }));
 
     setTransactions(initialTxs);
+
+    // Guardar datos iniciales en Firebase
+    const allUsers = [...initialTutors, ...initialStudents];
+    saveUsers(allUsers);
+    saveTasks(initialTasks);
+    saveProducts(initialStore);
+    saveBlockchain([]);
   };
 
   const startPriceSimulation = () => {
@@ -304,6 +363,7 @@ const BraiBitEcosystem = () => {
     };
 
     setUsers(updatedUsers);
+    saveUsers(updatedUsers); // Guardar en Firebase
     setTransactions([transaction, ...transactions]);
     showNotification(`✅ ${task.reward} ${CURRENCY_SYMBOL} asignados a ${student.name}`, 'success');
   };
@@ -348,7 +408,9 @@ const BraiBitEcosystem = () => {
 
     setCurrentUser(updatedUser);
     setUsers(updatedUsers);
+    saveUsers(updatedUsers); // Guardar en Firebase
     setStoreItems(updatedStore);
+    saveProducts(updatedStore); // Guardar en Firebase
     setTransactions([transaction, ...transactions]);
     showNotification(`✅ Has comprado: ${item.name}`, 'success');
   };
