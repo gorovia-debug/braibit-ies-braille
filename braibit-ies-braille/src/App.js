@@ -1977,7 +1977,6 @@ const InfoView = ({
           </div>
         </div>
       </div>
-// Firebase integration complete
 
       {/* Top Holders */}
       <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
