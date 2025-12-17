@@ -73,7 +73,6 @@ const BraiBitEcosystem = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [copied, setCopied] = useState(false);
   const [selectedTab, setSelectedTab] = useState('overview');
-  const [selectedGroup, setSelectedGroup] = useState('');
   const [showCNMVWarning, setShowCNMVWarning] = useState(true);
 
   const CURRENCY_NAME = "BraiBit";
@@ -1212,7 +1211,6 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
           <div>
             <label className="block text-gray-300 text-sm mb-2 font-semibold">📚 Filtrar por Grupo</label>
             <select
-              value={selectedGroup}
               onChange={(e) => {
                 setSelectedGroup(e.target.value);
                 setSelectedStudent(null);
@@ -1230,25 +1228,20 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
           <div>
             <label className="block text-gray-300 text-sm mb-2 font-semibold">
               👤 Selecciona Alumno/a
-              {selectedGroup && <span className="text-purple-400 ml-2">({selectedGroup})</span>}
             </label>
             <select
               value={selectedStudent || ''}
               onChange={(e) => setSelectedStudent(Number(e.target.value))}
               className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
-              <option value="">-- Elige un alumno {selectedGroup ? `de ${selectedGroup}` : ''} --</option>
               {users
-                .filter(student => !selectedGroup || student.group === selectedGroup)
                 .map(student => (
                 <option key={student.id} value={student.id}>
                   {student.name} ({student.group || student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
                 </option>
               ))}
             </select>
-            {selectedGroup && (
               <p className="text-xs text-gray-400 mt-1">
-                Mostrando {users.filter(s => s.group === selectedGroup).length} alumno(s) del grupo {selectedGroup}
               </p>
             )}
           </div>
