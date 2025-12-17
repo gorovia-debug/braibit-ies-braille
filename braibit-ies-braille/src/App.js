@@ -1207,24 +1207,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
         </h3>
 
         <div className="space-y-4">
-          {/* Selector de Grupos */}
-          <div>
-            <label className="block text-gray-300 text-sm mb-2 font-semibold">📚 Filtrar por Grupo</label>
-            <select
-              onChange={(e) => {
-                setSelectedGroup(e.target.value);
-                setSelectedStudent(null);
-              }}
-              className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
-            >
-              <option value="">-- Todos los grupos --</option>
-              <option value="DEMO">🎓 DEMO</option>
-              <option value="AD-1">📘 AD-1 (17 alumnos)</option>
-              <option value="AD-2">📗 AD-2 (14 alumnos)</option>
-            </select>
-          </div>
-
-          {/* Selector de Alumnos con filtro */}
+          {/* Selector de Alumnos */}
           <div>
             <label className="block text-gray-300 text-sm mb-2 font-semibold">
               👤 Selecciona Alumno/a
@@ -1234,16 +1217,13 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
               onChange={(e) => setSelectedStudent(Number(e.target.value))}
               className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
-              {users
-                .map(student => (
+              <option value="">-- Elige un alumno --</option>
+              {users.map(student => (
                 <option key={student.id} value={student.id}>
                   {student.name} ({student.group || student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
                 </option>
               ))}
             </select>
-              <p className="text-xs text-gray-400 mt-1">
-              </p>
-            )}
           </div>
 
           <div>
