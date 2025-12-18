@@ -1209,6 +1209,8 @@ const initialStudents = [
   );
 };
 
+
+export default BraiBitEcosystem;
 // ============================================
 // COMPONENTE LOGIN SCREEN
 // ============================================
@@ -1605,7 +1607,6 @@ const CNMVWarning = ({ onClose }) => {
         </div>
       )}
 
-export default BraiBitEcosystem;
 // ============================================
 // WALLET VIEW COMPONENT
 // ============================================
