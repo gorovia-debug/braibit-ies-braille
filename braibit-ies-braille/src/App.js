@@ -2200,42 +2200,18 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
 // ============================================
 
 const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }) => {
+  const [filter, setFilter] = React.useState('all');
+  
   // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
   const filteredTx = currentUser.role === "tutor" 
     ? transactions 
     : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
 
-  const displayTx = filter === "all"
-  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
-  const filteredTx = currentUser.role === "tutor" 
-    ? transactions 
-    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
-
-  const displayTx = filter === "all"
-  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
-  const filteredTx = currentUser.role === "tutor" 
-    ? transactions 
-    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
-
-  const displayTx = filter === "all"
-  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
-  const filteredTx = currentUser.role === "tutor" 
-    ? transactions 
-    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
-
-  const displayTx = filter === "all"
-  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
-  const filteredTx = currentUser.role === "tutor" 
-    ? transactions 
-    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
-
-  const displayTx = filter === "all"
-  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
-  const filteredTx = currentUser.role === "tutor" 
-    ? transactions 
-    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
-
-  const displayTx = filter === "all"
+  const displayTx = filter === "all" 
+    ? filteredTx 
+    : filter === "received" 
+      ? filteredTx.filter(tx => tx.to === currentUser.ethAddress)
+      : filteredTx.filter(tx => tx.from === currentUser.ethAddress);
 
   return (
     <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
@@ -2262,14 +2238,14 @@ const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }
         </div>
       </div>
 
-      {filteredTx.length === 0 ? (
+      {displayTx.length === 0 ? (
         <div className="text-center py-12">
           <History className="w-16 h-16 text-gray-600 mx-auto mb-4" />
           <p className="text-gray-400">No hay transacciones en el historial</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredTx.map(tx => {
+          {displayTx.map(tx => {
             const isReceived = tx.to === currentUser.ethAddress;
             return (
               <div 
