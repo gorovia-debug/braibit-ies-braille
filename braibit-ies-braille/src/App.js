@@ -1204,179 +1204,6 @@ const initialStudents = [
           )}
         </div>
       </div>
-      {/* MODAL: GESTIÓN DE GRUPOS */}
-      {showGroupManagement && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                <Users className="w-6 h-6" />
-                Gestión de Mis Grupos
-              </h2>
-              <button
-                onClick={() => {
-                  setShowGroupManagement(false);
-                  setEditingGroup(null);
-                }}
-                className="text-white/80 hover:text-white transition"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {currentUser.groups.map((group) => {
-                const groupStudents = users.filter(u => u.group === group.id);
-                const groupName = group.customName || group.name;
-
-                return (
-                  <div key={group.id} className="bg-white/10 backdrop-blur rounded-xl p-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex-1">
-                        {editingGroup === group.id ? (
-                          <div className="flex gap-2">
-                            <input
-                              type="text"
-                              defaultValue={groupName}
-                              placeholder="Nombre del grupo"
-                              onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                  updateGroupName(group.id, e.target.value);
-                                  setEditingGroup(null);
-                                }
-                              }}
-                              className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
-                              autoFocus
-                            />
-                            <button
-                              onClick={(e) => {
-                                const input = e.target.parentElement.querySelector('input');
-                                updateGroupName(group.id, input.value);
-                                setEditingGroup(null);
-                              }}
-                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
-                            >
-                              ✓
-                            </button>
-                            <button
-                              onClick={() => setEditingGroup(null)}
-                              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
-                            >
-                              ✗
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-3">
-                            <h3 className="text-xl font-bold text-white">{groupName}</h3>
-                            <button
-                              onClick={() => setEditingGroup(group.id)}
-                              className="text-white/60 hover:text-white transition"
-                            >
-                              ✏️ Editar
-                            </button>
-                          </div>
-                        )}
-                        <p className="text-gray-300 mt-1">
-                          {groupStudents.length} alumno{groupStudents.length !== 1 ? 's' : ''}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => setShowCredentials(group.id)}
-                        className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center justify-center gap-2"
-                      >
-                        <FileText className="w-4 h-4" />
-                        Ver Credenciales
-                      </button>
-                      <button
-                        onClick={() => exportCredentials(group.id)}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
-                      >
-                        📥 CSV
-                      </button>
-                      <button
-                        onClick={() => printCredentials(group.id)}
-                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
-                      >
-                        🖨️ Imprimir
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL: VER CREDENCIALES */}
-      {showCredentials && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
-            {(() => {
-              const group = currentUser.groups.find(g => g.id === showCredentials);
-              const groupStudents = users.filter(u => u.group === showCredentials);
-              const groupName = group?.customName || group?.name;
-
-              return (
-                <>
-                  <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-white">
-                      Credenciales - {groupName}
-                    </h2>
-                    <button
-                      onClick={() => setShowCredentials(null)}
-                      className="text-white/80 hover:text-white transition"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur rounded-xl overflow-hidden">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-white/20">
-                          <th className="px-4 py-3 text-left text-white font-semibold">Nick</th>
-                          <th className="px-4 py-3 text-left text-white font-semibold">Contraseña</th>
-                          <th className="px-4 py-3 text-left text-white font-semibold">Tokens</th>
-                          <th className="px-4 py-3 text-left text-white font-semibold">Nombre</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {groupStudents.map((student, index) => (
-                          <tr key={student.id} className={index % 2 === 0 ? 'bg-white/5' : ''}>
-                            <td className="px-4 py-3 text-white font-mono">{student.nick}</td>
-                            <td className="px-4 py-3 text-white font-mono">{student.password}</td>
-                            <td className="px-4 py-3 text-white">{formatNumber(student.tokens)} BB</td>
-                            <td className="px-4 py-3 text-gray-300">{student.name}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="flex gap-2 mt-6">
-                    <button
-                      onClick={() => exportCredentials(showCredentials)}
-                      className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center justify-center gap-2"
-                    >
-                      📥 Exportar CSV
-                    </button>
-                    <button
-                      onClick={() => printCredentials(showCredentials)}
-                      className="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center justify-center gap-2"
-                    >
-                      🖨️ Imprimir
-                    </button>
-                  </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
@@ -1603,6 +1430,184 @@ const CNMVWarning = ({ onClose }) => {
   );
 };
 
+      {/* MODAL: GESTIÓN DE GRUPOS */}
+      {showGroupManagement && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <Users className="w-6 h-6" />
+                Gestión de Mis Grupos
+              </h2>
+              <button
+                onClick={() => {
+                  setShowGroupManagement(false);
+                  setEditingGroup(null);
+                }}
+                className="text-white/80 hover:text-white transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {currentUser.groups.map((group) => {
+                const groupStudents = users.filter(u => u.group === group.id);
+                const groupName = group.customName || group.name;
+
+                return (
+                  <div key={group.id} className="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        {editingGroup === group.id ? (
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              defaultValue={groupName}
+                              placeholder="Nombre del grupo"
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                  updateGroupName(group.id, e.target.value);
+                                  setEditingGroup(null);
+                                }
+                              }}
+                              className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                              autoFocus
+                            />
+                            <button
+                              onClick={(e) => {
+                                const input = e.target.parentElement.querySelector('input');
+                                updateGroupName(group.id, input.value);
+                                setEditingGroup(null);
+                              }}
+                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                            >
+                              ✓
+                            </button>
+                            <button
+                              onClick={() => setEditingGroup(null)}
+                              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
+                            >
+                              ✗
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <h3 className="text-xl font-bold text-white">{groupName}</h3>
+                            <button
+                              onClick={() => setEditingGroup(group.id)}
+                              className="text-white/60 hover:text-white transition"
+                            >
+                              ✏️ Editar
+                            </button>
+                          </div>
+                        )}
+                        <p className="text-gray-300 mt-1">
+                          {groupStudents.length} alumno{groupStudents.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setShowCredentials(group.id)}
+                        className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                      >
+                        <FileText className="w-4 h-4" />
+                        Ver Credenciales
+                      </button>
+                      <button
+                        onClick={() => exportCredentials(group.id)}
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+                      >
+                        📥 CSV
+                      </button>
+                      <button
+                        onClick={() => printCredentials(group.id)}
+                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                      >
+                        🖨️ Imprimir
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: VER CREDENCIALES */}
+      {showCredentials && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            {(() => {
+              const group = currentUser.groups.find(g => g.id === showCredentials);
+              const groupStudents = users.filter(u => u.group === showCredentials);
+              const groupName = group?.customName || group?.name;
+
+              return (
+                <>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-white">
+                      Credenciales - {groupName}
+                    </h2>
+                    <button
+                      onClick={() => setShowCredentials(null)}
+                      className="text-white/80 hover:text-white transition"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur rounded-xl overflow-hidden">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-white/20">
+                          <th className="px-4 py-3 text-left text-white font-semibold">Nick</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Contraseña</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Tokens</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Nombre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {groupStudents.map((student, index) => (
+                          <tr key={student.id} className={index % 2 === 0 ? 'bg-white/5' : ''}>
+                            <td className="px-4 py-3 text-white font-mono">{student.nick}</td>
+                            <td className="px-4 py-3 text-white font-mono">{student.password}</td>
+                            <td className="px-4 py-3 text-white">{formatNumber(student.tokens)} BB</td>
+                            <td className="px-4 py-3 text-gray-300">{student.name}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="flex gap-2 mt-6">
+                    <button
+                      onClick={() => exportCredentials(showCredentials)}
+                      className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                      📥 Exportar CSV
+                    </button>
+                    <button
+                      onClick={() => printCredentials(showCredentials)}
+                      className="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                      🖨️ Imprimir
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+};
+
 // ============================================
 // WALLET VIEW COMPONENT
 // ============================================
@@ -1742,6 +1747,20 @@ const WalletView = ({
           { id: 'overview', label: '📊 Vista General', icon: Activity },
           ...(currentUser.role === 'tutor' ? [{ id: 'assign', label: '⭐ Asignar Tareas', icon: Award }] : []),
           ...(currentUser.role === 'student' ? [{ id: 'store', label: '🛒 Tienda', icon: ShoppingCart }] : []),
+          )}
+
+          {currentUser.role === 'tutor' && (
+            <button
+              onClick={() => setShowGroupManagement(true)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition ${
+                showGroupManagement
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                  : 'text-gray-300 hover:bg-white/5'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              Mis Grupos
+            </button>
           { id: 'history', label: '📜 Historial', icon: History }
         ].map(tab => (
           <button
@@ -1757,16 +1776,6 @@ const WalletView = ({
             {tab.label}
           </button>
         ))}
-
-        {currentUser.role === 'tutor' && (
-          <button
-            onClick={() => setShowGroupManagement(true)}
-            className="flex items-center gap-3 px-6 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5 font-semibold whitespace-nowrap"
-          >
-            <Users className="w-5 h-5" />
-            👥 Mis Grupos
-          </button>
-        )}
       </div>
 
       {/* Tab Content */}
@@ -2200,18 +2209,42 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
 // ============================================
 
 const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }) => {
-  const [filter, setFilter] = React.useState('all');
-  
   // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
   const filteredTx = currentUser.role === "tutor" 
     ? transactions 
     : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
 
-  const displayTx = filter === "all" 
-    ? filteredTx 
-    : filter === "received" 
-      ? filteredTx.filter(tx => tx.to === currentUser.ethAddress)
-      : filteredTx.filter(tx => tx.from === currentUser.ethAddress);
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
 
   return (
     <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
@@ -2238,14 +2271,14 @@ const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }
         </div>
       </div>
 
-      {displayTx.length === 0 ? (
+      {filteredTx.length === 0 ? (
         <div className="text-center py-12">
           <History className="w-16 h-16 text-gray-600 mx-auto mb-4" />
           <p className="text-gray-400">No hay transacciones en el historial</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {displayTx.map(tx => {
+          {filteredTx.map(tx => {
             const isReceived = tx.to === currentUser.ethAddress;
             return (
               <div 
@@ -2819,5 +2852,7 @@ const InfoView = ({
     </div>
   );
 };
+
+
 
 export default BraiBitEcosystem;
