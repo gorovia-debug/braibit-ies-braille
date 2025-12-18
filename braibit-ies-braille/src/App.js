@@ -66,14 +66,22 @@ const BraiBitEcosystem = () => {
   const [transactions, setTransactions] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [notification, setNotification] = useState('');
-  const [btcPrice, setBtcPrice] = useState(92340); // Precio BTC en USD (se actualizará con API)
-  const [bbPrice, setBbPrice] = useState(0.93); // Precio BB en USD (referencia)
+  const [btcPrice, setBtcPrice] = useState(92340);
+  const [bbPrice, setBbPrice] = useState(0.93);
   const [priceHistory, setPriceHistory] = useState([]);
   const [showSeedPhrase, setShowSeedPhrase] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [copied, setCopied] = useState(false);
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showCNMVWarning, setShowCNMVWarning] = useState(true);
+  const [showCNMVWarning, setShowCNMVWarning] = useState(true);
+  const [showGroupManagement, setShowGroupManagement] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(null);
+  const [editingGroup, setEditingGroup] = useState(null);
+  // Nuevos estados para gestión de grupos
+  const [showGroupManagement, setShowGroupManagement] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(null);
+  const [editingGroup, setEditingGroup] = useState(null);
 
   const CURRENCY_NAME = "BraiBit";
   const CURRENCY_SYMBOL = "BB";
@@ -157,54 +165,486 @@ const BraiBitEcosystem = () => {
     }
   };
 
+
   const initializeData = async () => {
-    const initialTutors = [
-      { id: 1, name: "Tutor/a 1", email: "tutor1@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 2, name: "Tutor/a 2", email: "tutor2@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 3, name: "Tutor/a 3", email: "tutor3@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 4, name: "Tutor/a 4", email: "tutor4@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
-    ];
+// REEMPLAZAR en initializeData (líneas 166-211)
+// Desde: const initialTutors = [
+// Hasta: ];  (después del último alumno)
 
-    const initialStudents = [
-      // USUARIO DEMO (para aprender a usar la aplicación)
-      { id: 1, nick: "DEMO", name: "Usuario Demo", password: "demo", role: "student", tokens: 100, class: "DEMO", group: "DEMO", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      
-      // GRUPO AD-1 (17 alumnos) - Tutor/a 1
-      { id: 101, nick: "AD1-001", name: "Alumno AD1-01", password: "AC5910", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 102, nick: "AD1-002", name: "Alumno AD1-02", password: "AD0630", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 103, nick: "AD1-003", name: "Alumno AD1-03", password: "AF2038", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 104, nick: "AD1-004", name: "Alumno AD1-04", password: "BZ6329", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 105, nick: "AD1-005", name: "Alumno AD1-05", password: "CW1313", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 106, nick: "AD1-006", name: "Alumno AD1-06", password: "DI7288", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 107, nick: "AD1-007", name: "Alumno AD1-07", password: "EA5327", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 108, nick: "AD1-008", name: "Alumno AD1-08", password: "EU9023", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 109, nick: "AD1-009", name: "Alumno AD1-09", password: "GD8393", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 110, nick: "AD1-010", name: "Alumno AD1-10", password: "HG0361", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 111, nick: "AD1-011", name: "Alumno AD1-11", password: "HM4225", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 112, nick: "AD1-012", name: "Alumno AD1-12", password: "KG7188", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 113, nick: "AD1-013", name: "Alumno AD1-13", password: "LR7750", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 114, nick: "AD1-014", name: "Alumno AD1-14", password: "LV0207", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 115, nick: "AD1-015", name: "Alumno AD1-15", password: "MD7843", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 116, nick: "AD1-016", name: "Alumno AD1-16", password: "MI4782", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 117, nick: "AD1-017", name: "Alumno AD1-17", password: "MI9157", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      
-      // GRUPO AD-2 (14 alumnos) - Tutor/a 1
-      { id: 201, nick: "AD2-001", name: "Alumno AD2-01", password: "MJ0140", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 202, nick: "AD2-002", name: "Alumno AD2-02", password: "ND0532", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 203, nick: "AD2-003", name: "Alumno AD2-03", password: "NZ0049", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 204, nick: "AD2-004", name: "Alumno AD2-04", password: "PX1021", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 205, nick: "AD2-005", name: "Alumno AD2-05", password: "SI0445", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 206, nick: "AD2-006", name: "Alumno AD2-06", password: "TT0380", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 207, nick: "AD2-007", name: "Alumno AD2-07", password: "UK5457", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 208, nick: "AD2-008", name: "Alumno AD2-08", password: "VK8612", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 209, nick: "AD2-009", name: "Alumno AD2-09", password: "WI1158", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 210, nick: "AD2-010", name: "Alumno AD2-10", password: "YA5958", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 211, nick: "AD2-011", name: "Alumno AD2-11", password: "YR2620", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 212, nick: "AD2-012", name: "Alumno AD2-12", password: "YV9005", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 213, nick: "AD2-013", name: "Alumno AD2-13", password: "ZD5481", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 214, nick: "AD2-014", name: "Alumno AD2-14", password: "ZJ6302", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
-    ];
+const initialTutors = [
+  { 
+    id: 1, 
+    name: "Tutor/a 1", 
+    email: "tutor1@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T1A", name: "Grupo 1A", customName: "" },
+      { id: "T1B", name: "Grupo 1B", customName: "" }
+    ]
+  },
+  { 
+    id: 2, 
+    name: "Tutor/a 2", 
+    email: "tutor2@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T2A", name: "Grupo 2A", customName: "" },
+      { id: "T2B", name: "Grupo 2B", customName: "" }
+    ]
+  },
+  { 
+    id: 3, 
+    name: "Tutor/a 3", 
+    email: "tutor3@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T3A", name: "Grupo 3A", customName: "" },
+      { id: "T3B", name: "Grupo 3B", customName: "" }
+    ]
+  },
+  { 
+    id: 4, 
+    name: "Tutor/a 4", 
+    email: "tutor4@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T4A", name: "Grupo 4A", customName: "" },
+      { id: "T4B", name: "Grupo 4B", customName: "" }
+    ]
+  },
+  { 
+    id: 5, 
+    name: "Tutor/a 5", 
+    email: "tutor5@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T5A", name: "Grupo 5A", customName: "" },
+      { id: "T5B", name: "Grupo 5B", customName: "" }
+    ]
+  },
+  { 
+    id: 6, 
+    name: "Tutor/a 6", 
+    email: "tutor6@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T6A", name: "Grupo 6A", customName: "" },
+      { id: "T6B", name: "Grupo 6B", customName: "" }
+    ]
+  },
+  { 
+    id: 7, 
+    name: "Tutor/a 7", 
+    email: "tutor7@iesluisbraille.edu", 
+    role: "tutor", 
+    tokens: 10000, 
+    ethAddress: generateEthAddress(), 
+    seedPhrase: generateSeedPhrase(),
+    groups: [
+      { id: "T7A", name: "Grupo 7A", customName: "" },
+      { id: "T7B", name: "Grupo 7B", customName: "" }
+    ]
+  }
+];
 
+const initialStudents = [
+  // Grupo 1A (25 alumnos) - Tutor/a 1
+  { id: 1000, nick: "T1A-001", name: "Alumno T1A-01", password: "EG2594", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1001, nick: "T1A-002", name: "Alumno T1A-02", password: "KW1300", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1002, nick: "T1A-003", name: "Alumno T1A-03", password: "LU8767", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1003, nick: "T1A-004", name: "Alumno T1A-04", password: "EE1429", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1004, nick: "T1A-005", name: "Alumno T1A-05", password: "XP5834", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1005, nick: "T1A-006", name: "Alumno T1A-06", password: "TU4628", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1006, nick: "T1A-007", name: "Alumno T1A-07", password: "AZ8597", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1007, nick: "T1A-008", name: "Alumno T1A-08", password: "PV1883", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1008, nick: "T1A-009", name: "Alumno T1A-09", password: "MJ5524", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1009, nick: "T1A-010", name: "Alumno T1A-10", password: "ZY6122", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1010, nick: "T1A-011", name: "Alumno T1A-11", password: "CS8399", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1011, nick: "T1A-012", name: "Alumno T1A-12", password: "LA7870", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1012, nick: "T1A-013", name: "Alumno T1A-13", password: "LF4699", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1013, nick: "T1A-014", name: "Alumno T1A-14", password: "BA4283", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1014, nick: "T1A-015", name: "Alumno T1A-15", password: "CN7984", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1015, nick: "T1A-016", name: "Alumno T1A-16", password: "KL7107", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1016, nick: "T1A-017", name: "Alumno T1A-17", password: "XO2415", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1017, nick: "T1A-018", name: "Alumno T1A-18", password: "LA0298", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1018, nick: "T1A-019", name: "Alumno T1A-19", password: "FB2065", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1019, nick: "T1A-020", name: "Alumno T1A-20", password: "BB0329", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1020, nick: "T1A-021", name: "Alumno T1A-21", password: "SZ5134", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1021, nick: "T1A-022", name: "Alumno T1A-22", password: "WA7740", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1022, nick: "T1A-023", name: "Alumno T1A-23", password: "BL1748", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1023, nick: "T1A-024", name: "Alumno T1A-24", password: "IN3274", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1024, nick: "T1A-025", name: "Alumno T1A-25", password: "FC3878", role: "student", tokens: 0, class: "T1A", group: "T1A", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 1B (25 alumnos) - Tutor/a 1
+  { id: 1025, nick: "T1B-001", name: "Alumno T1B-01", password: "YL4015", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1026, nick: "T1B-002", name: "Alumno T1B-02", password: "IA6835", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1027, nick: "T1B-003", name: "Alumno T1B-03", password: "KF6823", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1028, nick: "T1B-004", name: "Alumno T1B-04", password: "IL6495", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1029, nick: "T1B-005", name: "Alumno T1B-05", password: "AR6550", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1030, nick: "T1B-006", name: "Alumno T1B-06", password: "YV8596", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1031, nick: "T1B-007", name: "Alumno T1B-07", password: "FB1925", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1032, nick: "T1B-008", name: "Alumno T1B-08", password: "SI2721", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1033, nick: "T1B-009", name: "Alumno T1B-09", password: "HS3530", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1034, nick: "T1B-010", name: "Alumno T1B-10", password: "TB9260", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1035, nick: "T1B-011", name: "Alumno T1B-11", password: "ER4233", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1036, nick: "T1B-012", name: "Alumno T1B-12", password: "NT4630", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1037, nick: "T1B-013", name: "Alumno T1B-13", password: "PA7836", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1038, nick: "T1B-014", name: "Alumno T1B-14", password: "QT4887", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1039, nick: "T1B-015", name: "Alumno T1B-15", password: "CU4486", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1040, nick: "T1B-016", name: "Alumno T1B-16", password: "NM6794", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1041, nick: "T1B-017", name: "Alumno T1B-17", password: "TM2232", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1042, nick: "T1B-018", name: "Alumno T1B-18", password: "HJ5985", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1043, nick: "T1B-019", name: "Alumno T1B-19", password: "JZ5221", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1044, nick: "T1B-020", name: "Alumno T1B-20", password: "LM2993", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1045, nick: "T1B-021", name: "Alumno T1B-21", password: "SC8457", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1046, nick: "T1B-022", name: "Alumno T1B-22", password: "RF0902", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1047, nick: "T1B-023", name: "Alumno T1B-23", password: "CA2591", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1048, nick: "T1B-024", name: "Alumno T1B-24", password: "VY8004", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1049, nick: "T1B-025", name: "Alumno T1B-25", password: "OG6557", role: "student", tokens: 0, class: "T1B", group: "T1B", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 2A (25 alumnos) - Tutor/a 2
+  { id: 1050, nick: "T2A-001", name: "Alumno T2A-01", password: "IG2003", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1051, nick: "T2A-002", name: "Alumno T2A-02", password: "FN7507", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1052, nick: "T2A-003", name: "Alumno T2A-03", password: "RZ8207", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1053, nick: "T2A-004", name: "Alumno T2A-04", password: "XH9171", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1054, nick: "T2A-005", name: "Alumno T2A-05", password: "GN3128", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1055, nick: "T2A-006", name: "Alumno T2A-06", password: "HT0069", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1056, nick: "T2A-007", name: "Alumno T2A-07", password: "BN8511", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1057, nick: "T2A-008", name: "Alumno T2A-08", password: "SQ6034", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1058, nick: "T2A-009", name: "Alumno T2A-09", password: "YP0798", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1059, nick: "T2A-010", name: "Alumno T2A-10", password: "NT0768", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1060, nick: "T2A-011", name: "Alumno T2A-11", password: "QR0188", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1061, nick: "T2A-012", name: "Alumno T2A-12", password: "KK2072", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1062, nick: "T2A-013", name: "Alumno T2A-13", password: "RS5055", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1063, nick: "T2A-014", name: "Alumno T2A-14", password: "NC8773", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1064, nick: "T2A-015", name: "Alumno T2A-15", password: "OG9361", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1065, nick: "T2A-016", name: "Alumno T2A-16", password: "HA2254", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1066, nick: "T2A-017", name: "Alumno T2A-17", password: "DZ7013", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1067, nick: "T2A-018", name: "Alumno T2A-18", password: "TB7512", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1068, nick: "T2A-019", name: "Alumno T2A-19", password: "FA4735", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1069, nick: "T2A-020", name: "Alumno T2A-20", password: "BA8190", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1070, nick: "T2A-021", name: "Alumno T2A-21", password: "CW1037", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1071, nick: "T2A-022", name: "Alumno T2A-22", password: "VA2189", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1072, nick: "T2A-023", name: "Alumno T2A-23", password: "FO7730", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1073, nick: "T2A-024", name: "Alumno T2A-24", password: "LT0585", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1074, nick: "T2A-025", name: "Alumno T2A-25", password: "MC1130", role: "student", tokens: 0, class: "T2A", group: "T2A", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 2B (25 alumnos) - Tutor/a 2
+  { id: 1075, nick: "T2B-001", name: "Alumno T2B-01", password: "KY6163", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1076, nick: "T2B-002", name: "Alumno T2B-02", password: "DN7482", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1077, nick: "T2B-003", name: "Alumno T2B-03", password: "XZ3195", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1078, nick: "T2B-004", name: "Alumno T2B-04", password: "WR8442", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1079, nick: "T2B-005", name: "Alumno T2B-05", password: "HL4372", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1080, nick: "T2B-006", name: "Alumno T2B-06", password: "XG3101", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1081, nick: "T2B-007", name: "Alumno T2B-07", password: "TJ7995", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1082, nick: "T2B-008", name: "Alumno T2B-08", password: "KU9124", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1083, nick: "T2B-009", name: "Alumno T2B-09", password: "EL5177", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1084, nick: "T2B-010", name: "Alumno T2B-10", password: "HR2018", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1085, nick: "T2B-011", name: "Alumno T2B-11", password: "UY1343", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1086, nick: "T2B-012", name: "Alumno T2B-12", password: "JM8631", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1087, nick: "T2B-013", name: "Alumno T2B-13", password: "QP6253", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1088, nick: "T2B-014", name: "Alumno T2B-14", password: "MZ6875", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1089, nick: "T2B-015", name: "Alumno T2B-15", password: "CM0767", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1090, nick: "T2B-016", name: "Alumno T2B-16", password: "VK0706", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1091, nick: "T2B-017", name: "Alumno T2B-17", password: "JM5755", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1092, nick: "T2B-018", name: "Alumno T2B-18", password: "WM5895", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1093, nick: "T2B-019", name: "Alumno T2B-19", password: "BF3339", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1094, nick: "T2B-020", name: "Alumno T2B-20", password: "YU7763", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1095, nick: "T2B-021", name: "Alumno T2B-21", password: "VF7334", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1096, nick: "T2B-022", name: "Alumno T2B-22", password: "LE7943", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1097, nick: "T2B-023", name: "Alumno T2B-23", password: "ZI9282", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1098, nick: "T2B-024", name: "Alumno T2B-24", password: "RE4889", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1099, nick: "T2B-025", name: "Alumno T2B-25", password: "XG6794", role: "student", tokens: 0, class: "T2B", group: "T2B", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 3A (25 alumnos) - Tutor/a 3
+  { id: 1100, nick: "T3A-001", name: "Alumno T3A-01", password: "XE3335", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1101, nick: "T3A-002", name: "Alumno T3A-02", password: "KQ6599", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1102, nick: "T3A-003", name: "Alumno T3A-03", password: "HM2130", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1103, nick: "T3A-004", name: "Alumno T3A-04", password: "RZ0471", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1104, nick: "T3A-005", name: "Alumno T3A-05", password: "PP7143", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1105, nick: "T3A-006", name: "Alumno T3A-06", password: "WH5676", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1106, nick: "T3A-007", name: "Alumno T3A-07", password: "DI3063", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1107, nick: "T3A-008", name: "Alumno T3A-08", password: "PJ5985", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1108, nick: "T3A-009", name: "Alumno T3A-09", password: "UA3141", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1109, nick: "T3A-010", name: "Alumno T3A-10", password: "IW1963", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1110, nick: "T3A-011", name: "Alumno T3A-11", password: "KV7230", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1111, nick: "T3A-012", name: "Alumno T3A-12", password: "RC6669", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1112, nick: "T3A-013", name: "Alumno T3A-13", password: "EX0307", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1113, nick: "T3A-014", name: "Alumno T3A-14", password: "FK2761", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1114, nick: "T3A-015", name: "Alumno T3A-15", password: "BH1844", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1115, nick: "T3A-016", name: "Alumno T3A-16", password: "VB2783", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1116, nick: "T3A-017", name: "Alumno T3A-17", password: "BR2664", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1117, nick: "T3A-018", name: "Alumno T3A-18", password: "KF6331", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1118, nick: "T3A-019", name: "Alumno T3A-19", password: "ET7793", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1119, nick: "T3A-020", name: "Alumno T3A-20", password: "EB5290", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1120, nick: "T3A-021", name: "Alumno T3A-21", password: "OY6484", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1121, nick: "T3A-022", name: "Alumno T3A-22", password: "VR4272", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1122, nick: "T3A-023", name: "Alumno T3A-23", password: "GX8292", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1123, nick: "T3A-024", name: "Alumno T3A-24", password: "GW5594", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1124, nick: "T3A-025", name: "Alumno T3A-25", password: "QY0876", role: "student", tokens: 0, class: "T3A", group: "T3A", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 3B (25 alumnos) - Tutor/a 3
+  { id: 1125, nick: "T3B-001", name: "Alumno T3B-01", password: "HB6570", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1126, nick: "T3B-002", name: "Alumno T3B-02", password: "CW1175", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1127, nick: "T3B-003", name: "Alumno T3B-03", password: "RC7508", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1128, nick: "T3B-004", name: "Alumno T3B-04", password: "RB5936", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1129, nick: "T3B-005", name: "Alumno T3B-05", password: "AB4421", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1130, nick: "T3B-006", name: "Alumno T3B-06", password: "II9109", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1131, nick: "T3B-007", name: "Alumno T3B-07", password: "NP5052", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1132, nick: "T3B-008", name: "Alumno T3B-08", password: "CG1875", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1133, nick: "T3B-009", name: "Alumno T3B-09", password: "TM7918", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1134, nick: "T3B-010", name: "Alumno T3B-10", password: "RU4232", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1135, nick: "T3B-011", name: "Alumno T3B-11", password: "UY6036", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1136, nick: "T3B-012", name: "Alumno T3B-12", password: "EQ2562", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1137, nick: "T3B-013", name: "Alumno T3B-13", password: "FF2143", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1138, nick: "T3B-014", name: "Alumno T3B-14", password: "QR6773", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1139, nick: "T3B-015", name: "Alumno T3B-15", password: "PJ8384", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1140, nick: "T3B-016", name: "Alumno T3B-16", password: "HA5361", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1141, nick: "T3B-017", name: "Alumno T3B-17", password: "DV8833", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1142, nick: "T3B-018", name: "Alumno T3B-18", password: "DU4893", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1143, nick: "T3B-019", name: "Alumno T3B-19", password: "GB1786", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1144, nick: "T3B-020", name: "Alumno T3B-20", password: "JV3135", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1145, nick: "T3B-021", name: "Alumno T3B-21", password: "MP2286", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1146, nick: "T3B-022", name: "Alumno T3B-22", password: "RO0673", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1147, nick: "T3B-023", name: "Alumno T3B-23", password: "ZC7288", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1148, nick: "T3B-024", name: "Alumno T3B-24", password: "JJ7184", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1149, nick: "T3B-025", name: "Alumno T3B-25", password: "CB7014", role: "student", tokens: 0, class: "T3B", group: "T3B", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 4A (25 alumnos) - Tutor/a 4
+  { id: 1150, nick: "T4A-001", name: "Alumno T4A-01", password: "WE0162", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1151, nick: "T4A-002", name: "Alumno T4A-02", password: "HJ7838", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1152, nick: "T4A-003", name: "Alumno T4A-03", password: "HC5580", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1153, nick: "T4A-004", name: "Alumno T4A-04", password: "FH1067", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1154, nick: "T4A-005", name: "Alumno T4A-05", password: "EW1326", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1155, nick: "T4A-006", name: "Alumno T4A-06", password: "OW2181", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1156, nick: "T4A-007", name: "Alumno T4A-07", password: "VP6718", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1157, nick: "T4A-008", name: "Alumno T4A-08", password: "EY7736", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1158, nick: "T4A-009", name: "Alumno T4A-09", password: "DB4638", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1159, nick: "T4A-010", name: "Alumno T4A-10", password: "LS2532", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1160, nick: "T4A-011", name: "Alumno T4A-11", password: "YG0928", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1161, nick: "T4A-012", name: "Alumno T4A-12", password: "BM4765", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1162, nick: "T4A-013", name: "Alumno T4A-13", password: "LQ6633", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1163, nick: "T4A-014", name: "Alumno T4A-14", password: "DP2767", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1164, nick: "T4A-015", name: "Alumno T4A-15", password: "UH4340", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1165, nick: "T4A-016", name: "Alumno T4A-16", password: "XM4266", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1166, nick: "T4A-017", name: "Alumno T4A-17", password: "ZV6573", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1167, nick: "T4A-018", name: "Alumno T4A-18", password: "DD5262", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1168, nick: "T4A-019", name: "Alumno T4A-19", password: "SH9506", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1169, nick: "T4A-020", name: "Alumno T4A-20", password: "BA8548", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1170, nick: "T4A-021", name: "Alumno T4A-21", password: "ZB8686", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1171, nick: "T4A-022", name: "Alumno T4A-22", password: "IT0686", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1172, nick: "T4A-023", name: "Alumno T4A-23", password: "AM3343", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1173, nick: "T4A-024", name: "Alumno T4A-24", password: "DB4618", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1174, nick: "T4A-025", name: "Alumno T4A-25", password: "QH3058", role: "student", tokens: 0, class: "T4A", group: "T4A", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 4B (25 alumnos) - Tutor/a 4
+  { id: 1175, nick: "T4B-001", name: "Alumno T4B-01", password: "FV8017", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1176, nick: "T4B-002", name: "Alumno T4B-02", password: "VL9094", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1177, nick: "T4B-003", name: "Alumno T4B-03", password: "XJ4264", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1178, nick: "T4B-004", name: "Alumno T4B-04", password: "NQ1953", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1179, nick: "T4B-005", name: "Alumno T4B-05", password: "KL7626", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1180, nick: "T4B-006", name: "Alumno T4B-06", password: "VB7059", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1181, nick: "T4B-007", name: "Alumno T4B-07", password: "YM1101", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1182, nick: "T4B-008", name: "Alumno T4B-08", password: "HY7472", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1183, nick: "T4B-009", name: "Alumno T4B-09", password: "KT6458", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1184, nick: "T4B-010", name: "Alumno T4B-10", password: "ZN5554", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1185, nick: "T4B-011", name: "Alumno T4B-11", password: "JD5818", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1186, nick: "T4B-012", name: "Alumno T4B-12", password: "DY8442", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1187, nick: "T4B-013", name: "Alumno T4B-13", password: "ZV3727", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1188, nick: "T4B-014", name: "Alumno T4B-14", password: "LB7116", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1189, nick: "T4B-015", name: "Alumno T4B-15", password: "ZE2862", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1190, nick: "T4B-016", name: "Alumno T4B-16", password: "EB8028", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1191, nick: "T4B-017", name: "Alumno T4B-17", password: "XX9561", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1192, nick: "T4B-018", name: "Alumno T4B-18", password: "YE9273", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1193, nick: "T4B-019", name: "Alumno T4B-19", password: "IH4734", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1194, nick: "T4B-020", name: "Alumno T4B-20", password: "AS2273", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1195, nick: "T4B-021", name: "Alumno T4B-21", password: "BN7211", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1196, nick: "T4B-022", name: "Alumno T4B-22", password: "TH7664", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1197, nick: "T4B-023", name: "Alumno T4B-23", password: "FB1056", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1198, nick: "T4B-024", name: "Alumno T4B-24", password: "KV8227", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1199, nick: "T4B-025", name: "Alumno T4B-25", password: "VW5990", role: "student", tokens: 0, class: "T4B", group: "T4B", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 5A (25 alumnos) - Tutor/a 5
+  { id: 1200, nick: "T5A-001", name: "Alumno T5A-01", password: "RO6028", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1201, nick: "T5A-002", name: "Alumno T5A-02", password: "PP0571", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1202, nick: "T5A-003", name: "Alumno T5A-03", password: "WG1819", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1203, nick: "T5A-004", name: "Alumno T5A-04", password: "YY2198", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1204, nick: "T5A-005", name: "Alumno T5A-05", password: "HI9234", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1205, nick: "T5A-006", name: "Alumno T5A-06", password: "HP8214", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1206, nick: "T5A-007", name: "Alumno T5A-07", password: "IJ0933", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1207, nick: "T5A-008", name: "Alumno T5A-08", password: "IQ2005", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1208, nick: "T5A-009", name: "Alumno T5A-09", password: "DY3784", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1209, nick: "T5A-010", name: "Alumno T5A-10", password: "PA1892", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1210, nick: "T5A-011", name: "Alumno T5A-11", password: "SH1207", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1211, nick: "T5A-012", name: "Alumno T5A-12", password: "PO6418", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1212, nick: "T5A-013", name: "Alumno T5A-13", password: "VC8264", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1213, nick: "T5A-014", name: "Alumno T5A-14", password: "CY3593", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1214, nick: "T5A-015", name: "Alumno T5A-15", password: "MJ2178", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1215, nick: "T5A-016", name: "Alumno T5A-16", password: "OG4986", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1216, nick: "T5A-017", name: "Alumno T5A-17", password: "KF1478", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1217, nick: "T5A-018", name: "Alumno T5A-18", password: "AQ8255", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1218, nick: "T5A-019", name: "Alumno T5A-19", password: "JM9457", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1219, nick: "T5A-020", name: "Alumno T5A-20", password: "CO3077", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1220, nick: "T5A-021", name: "Alumno T5A-21", password: "KK2206", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1221, nick: "T5A-022", name: "Alumno T5A-22", password: "LO6249", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1222, nick: "T5A-023", name: "Alumno T5A-23", password: "JQ2478", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1223, nick: "T5A-024", name: "Alumno T5A-24", password: "ER5640", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1224, nick: "T5A-025", name: "Alumno T5A-25", password: "PF9114", role: "student", tokens: 0, class: "T5A", group: "T5A", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 5B (25 alumnos) - Tutor/a 5
+  { id: 1225, nick: "T5B-001", name: "Alumno T5B-01", password: "ME0035", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1226, nick: "T5B-002", name: "Alumno T5B-02", password: "TN6928", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1227, nick: "T5B-003", name: "Alumno T5B-03", password: "MR6932", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1228, nick: "T5B-004", name: "Alumno T5B-04", password: "YV1342", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1229, nick: "T5B-005", name: "Alumno T5B-05", password: "WB9712", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1230, nick: "T5B-006", name: "Alumno T5B-06", password: "DR1013", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1231, nick: "T5B-007", name: "Alumno T5B-07", password: "XR3710", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1232, nick: "T5B-008", name: "Alumno T5B-08", password: "XR3843", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1233, nick: "T5B-009", name: "Alumno T5B-09", password: "BX7829", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1234, nick: "T5B-010", name: "Alumno T5B-10", password: "KB0086", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1235, nick: "T5B-011", name: "Alumno T5B-11", password: "XO6838", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1236, nick: "T5B-012", name: "Alumno T5B-12", password: "NI0473", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1237, nick: "T5B-013", name: "Alumno T5B-13", password: "GV4104", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1238, nick: "T5B-014", name: "Alumno T5B-14", password: "XX5920", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1239, nick: "T5B-015", name: "Alumno T5B-15", password: "JD8271", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1240, nick: "T5B-016", name: "Alumno T5B-16", password: "PO4240", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1241, nick: "T5B-017", name: "Alumno T5B-17", password: "UU4466", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1242, nick: "T5B-018", name: "Alumno T5B-18", password: "JW2796", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1243, nick: "T5B-019", name: "Alumno T5B-19", password: "IE9777", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1244, nick: "T5B-020", name: "Alumno T5B-20", password: "PK8700", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1245, nick: "T5B-021", name: "Alumno T5B-21", password: "VP3980", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1246, nick: "T5B-022", name: "Alumno T5B-22", password: "QJ5995", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1247, nick: "T5B-023", name: "Alumno T5B-23", password: "JN0630", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1248, nick: "T5B-024", name: "Alumno T5B-24", password: "US5387", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1249, nick: "T5B-025", name: "Alumno T5B-25", password: "JP8131", role: "student", tokens: 0, class: "T5B", group: "T5B", tutorId: 5, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 6A (25 alumnos) - Tutor/a 6
+  { id: 1250, nick: "T6A-001", name: "Alumno T6A-01", password: "QW6751", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1251, nick: "T6A-002", name: "Alumno T6A-02", password: "OM5170", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1252, nick: "T6A-003", name: "Alumno T6A-03", password: "OR5579", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1253, nick: "T6A-004", name: "Alumno T6A-04", password: "DY5886", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1254, nick: "T6A-005", name: "Alumno T6A-05", password: "AK8367", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1255, nick: "T6A-006", name: "Alumno T6A-06", password: "XL1164", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1256, nick: "T6A-007", name: "Alumno T6A-07", password: "MD1841", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1257, nick: "T6A-008", name: "Alumno T6A-08", password: "JY0932", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1258, nick: "T6A-009", name: "Alumno T6A-09", password: "VE8005", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1259, nick: "T6A-010", name: "Alumno T6A-10", password: "OT1154", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1260, nick: "T6A-011", name: "Alumno T6A-11", password: "FL9480", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1261, nick: "T6A-012", name: "Alumno T6A-12", password: "RZ6480", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1262, nick: "T6A-013", name: "Alumno T6A-13", password: "UR6288", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1263, nick: "T6A-014", name: "Alumno T6A-14", password: "ZN8637", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1264, nick: "T6A-015", name: "Alumno T6A-15", password: "CD4064", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1265, nick: "T6A-016", name: "Alumno T6A-16", password: "OV6121", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1266, nick: "T6A-017", name: "Alumno T6A-17", password: "MB6946", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1267, nick: "T6A-018", name: "Alumno T6A-18", password: "JA6522", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1268, nick: "T6A-019", name: "Alumno T6A-19", password: "RU1153", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1269, nick: "T6A-020", name: "Alumno T6A-20", password: "JI6812", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1270, nick: "T6A-021", name: "Alumno T6A-21", password: "AI6830", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1271, nick: "T6A-022", name: "Alumno T6A-22", password: "EM9228", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1272, nick: "T6A-023", name: "Alumno T6A-23", password: "QM5454", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1273, nick: "T6A-024", name: "Alumno T6A-24", password: "NW9480", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1274, nick: "T6A-025", name: "Alumno T6A-25", password: "HW6139", role: "student", tokens: 0, class: "T6A", group: "T6A", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 6B (25 alumnos) - Tutor/a 6
+  { id: 1275, nick: "T6B-001", name: "Alumno T6B-01", password: "KF9274", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1276, nick: "T6B-002", name: "Alumno T6B-02", password: "BZ4462", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1277, nick: "T6B-003", name: "Alumno T6B-03", password: "XN1174", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1278, nick: "T6B-004", name: "Alumno T6B-04", password: "TS3251", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1279, nick: "T6B-005", name: "Alumno T6B-05", password: "CO4596", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1280, nick: "T6B-006", name: "Alumno T6B-06", password: "DW1249", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1281, nick: "T6B-007", name: "Alumno T6B-07", password: "SR9101", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1282, nick: "T6B-008", name: "Alumno T6B-08", password: "LY6075", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1283, nick: "T6B-009", name: "Alumno T6B-09", password: "XF5549", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1284, nick: "T6B-010", name: "Alumno T6B-10", password: "OG2106", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1285, nick: "T6B-011", name: "Alumno T6B-11", password: "MV7902", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1286, nick: "T6B-012", name: "Alumno T6B-12", password: "EK3529", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1287, nick: "T6B-013", name: "Alumno T6B-13", password: "XP5094", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1288, nick: "T6B-014", name: "Alumno T6B-14", password: "XZ0985", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1289, nick: "T6B-015", name: "Alumno T6B-15", password: "VM6452", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1290, nick: "T6B-016", name: "Alumno T6B-16", password: "ZL8356", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1291, nick: "T6B-017", name: "Alumno T6B-17", password: "JT0781", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1292, nick: "T6B-018", name: "Alumno T6B-18", password: "DN0682", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1293, nick: "T6B-019", name: "Alumno T6B-19", password: "NA1246", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1294, nick: "T6B-020", name: "Alumno T6B-20", password: "MT7055", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1295, nick: "T6B-021", name: "Alumno T6B-21", password: "CH0014", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1296, nick: "T6B-022", name: "Alumno T6B-22", password: "WQ7723", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1297, nick: "T6B-023", name: "Alumno T6B-23", password: "OQ3175", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1298, nick: "T6B-024", name: "Alumno T6B-24", password: "VS8138", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1299, nick: "T6B-025", name: "Alumno T6B-25", password: "OW8444", role: "student", tokens: 0, class: "T6B", group: "T6B", tutorId: 6, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 7A (25 alumnos) - Tutor/a 7
+  { id: 1300, nick: "T7A-001", name: "Alumno T7A-01", password: "CM4891", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1301, nick: "T7A-002", name: "Alumno T7A-02", password: "YM5535", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1302, nick: "T7A-003", name: "Alumno T7A-03", password: "VI7488", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1303, nick: "T7A-004", name: "Alumno T7A-04", password: "LH3826", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1304, nick: "T7A-005", name: "Alumno T7A-05", password: "LR1611", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1305, nick: "T7A-006", name: "Alumno T7A-06", password: "QU1792", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1306, nick: "T7A-007", name: "Alumno T7A-07", password: "ME0371", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1307, nick: "T7A-008", name: "Alumno T7A-08", password: "AS0349", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1308, nick: "T7A-009", name: "Alumno T7A-09", password: "AP1262", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1309, nick: "T7A-010", name: "Alumno T7A-10", password: "FF4230", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1310, nick: "T7A-011", name: "Alumno T7A-11", password: "VQ7525", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1311, nick: "T7A-012", name: "Alumno T7A-12", password: "JT2746", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1312, nick: "T7A-013", name: "Alumno T7A-13", password: "LI5891", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1313, nick: "T7A-014", name: "Alumno T7A-14", password: "HQ9333", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1314, nick: "T7A-015", name: "Alumno T7A-15", password: "YR4712", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1315, nick: "T7A-016", name: "Alumno T7A-16", password: "XL7421", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1316, nick: "T7A-017", name: "Alumno T7A-17", password: "QP9078", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1317, nick: "T7A-018", name: "Alumno T7A-18", password: "WG0255", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1318, nick: "T7A-019", name: "Alumno T7A-19", password: "WF8860", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1319, nick: "T7A-020", name: "Alumno T7A-20", password: "BZ7677", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1320, nick: "T7A-021", name: "Alumno T7A-21", password: "SC2735", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1321, nick: "T7A-022", name: "Alumno T7A-22", password: "RC4752", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1322, nick: "T7A-023", name: "Alumno T7A-23", password: "SZ1695", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1323, nick: "T7A-024", name: "Alumno T7A-24", password: "RU0707", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1324, nick: "T7A-025", name: "Alumno T7A-25", password: "IY4792", role: "student", tokens: 0, class: "T7A", group: "T7A", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+
+  // Grupo 7B (25 alumnos) - Tutor/a 7
+  { id: 1325, nick: "T7B-001", name: "Alumno T7B-01", password: "OM4525", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1326, nick: "T7B-002", name: "Alumno T7B-02", password: "TS0305", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1327, nick: "T7B-003", name: "Alumno T7B-03", password: "WZ9154", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1328, nick: "T7B-004", name: "Alumno T7B-04", password: "ZH8333", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1329, nick: "T7B-005", name: "Alumno T7B-05", password: "GF8728", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1330, nick: "T7B-006", name: "Alumno T7B-06", password: "MS5125", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1331, nick: "T7B-007", name: "Alumno T7B-07", password: "HO8147", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1332, nick: "T7B-008", name: "Alumno T7B-08", password: "OS5675", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1333, nick: "T7B-009", name: "Alumno T7B-09", password: "MU6900", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1334, nick: "T7B-010", name: "Alumno T7B-10", password: "AO3560", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1335, nick: "T7B-011", name: "Alumno T7B-11", password: "SR6422", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1336, nick: "T7B-012", name: "Alumno T7B-12", password: "DE4754", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1337, nick: "T7B-013", name: "Alumno T7B-13", password: "YG5807", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1338, nick: "T7B-014", name: "Alumno T7B-14", password: "MI2357", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1339, nick: "T7B-015", name: "Alumno T7B-15", password: "TI6715", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1340, nick: "T7B-016", name: "Alumno T7B-16", password: "YB6902", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1341, nick: "T7B-017", name: "Alumno T7B-17", password: "PN5549", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1342, nick: "T7B-018", name: "Alumno T7B-18", password: "DR2230", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1343, nick: "T7B-019", name: "Alumno T7B-19", password: "HC2815", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1344, nick: "T7B-020", name: "Alumno T7B-20", password: "ZS6190", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1345, nick: "T7B-021", name: "Alumno T7B-21", password: "TD0932", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1346, nick: "T7B-022", name: "Alumno T7B-22", password: "QD7834", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1347, nick: "T7B-023", name: "Alumno T7B-23", password: "TH7346", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1348, nick: "T7B-024", name: "Alumno T7B-24", password: "EE9122", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+  { id: 1349, nick: "T7B-025", name: "Alumno T7B-25", password: "DQ0963", role: "student", tokens: 0, class: "T7B", group: "T7B", tutorId: 7, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
+
+];
     const initialTasks = [
       { id: 1, name: "Apoyo en tarea", reward: 50, category: "Educativo" },
       { id: 2, name: "Tutoría a compañeros", reward: 100, category: "Educativo" },
@@ -263,9 +703,6 @@ const BraiBitEcosystem = () => {
     const allUsers = [...initialTutors, ...initialStudents];
     saveUsers(allUsers);
     saveTasks(initialTasks);
-    saveProducts(initialStore);
-    saveBlockchain([]);
-  };
 
   const startPriceSimulation = () => {
     // Simular pequeñas variaciones en el precio BB (±5%)
@@ -416,7 +853,137 @@ const BraiBitEcosystem = () => {
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
-    setTimeout(() => setNotification(''), 4000);
+
+  // NUEVA: Revertir una transacción
+  const revertTransaction = async (transactionId) => {
+    const tx = transactions.find(t => t.id === transactionId);
+    if (!tx || tx.status === 'reverted') {
+      showNotification('❌ No se puede revertir esta transacción', 'error');
+      return;
+    }
+
+    const sender = users.find(u => u.ethAddress === tx.from);
+    const receiver = users.find(u => u.ethAddress === tx.to);
+
+    if (!sender || !receiver) {
+      showNotification('❌ Error: usuarios no encontrados', 'error');
+      return;
+    }
+
+    const totalAmount = tx.amount + tx.gasFee;
+    const updatedUsers = users.map(u => {
+      if (u.id === sender.id) return { ...u, tokens: u.tokens + totalAmount };
+      if (u.id === receiver.id) return { ...u, tokens: Math.max(0, u.tokens - tx.amount) };
+      return u;
+    });
+
+    const updatedTransactions = transactions.map(t => 
+      t.id === transactionId 
+        ? { ...t, status: 'reverted', revertedBy: currentUser.name, revertedAt: new Date().toISOString() }
+        : t
+    );
+
+    setUsers(updatedUsers);
+    saveUsers(updatedUsers);
+    setTransactions(updatedTransactions);
+    showNotification('✅ Transacción revertida exitosamente', 'success');
+  };
+
+  const updateGroupName = async (groupId, newName) => {
+    const updatedUsers = users.map(u => {
+      if (u.id === currentUser.id && u.role === 'tutor') {
+        return {
+          ...u,
+          groups: u.groups.map(g => 
+            g.id === groupId ? { ...g, customName: newName } : g
+          )
+        };
+      }
+      return u;
+    });
+
+    setUsers(updatedUsers);
+    await saveUsers(updatedUsers);
+    showNotification('✅ Nombre de grupo actualizado', 'success');
+  };
+
+  const exportCredentials = (groupId) => {
+    const tutor = users.find(u => u.role === 'tutor' && u.id === currentUser.id);
+    if (!tutor) return;
+
+    const group = tutor.groups.find(g => g.id === groupId);
+    const groupStudents = users.filter(u => u.group === groupId);
+    const groupName = group?.customName || group?.name || groupId;
+    
+    let csv = 'Nick,Password,Tokens,Grupo\n';
+    groupStudents.forEach(student => {
+      csv += `${student.nick},${student.password},${student.tokens},${groupName}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `credenciales_${groupName.replace(/\s+/g, '_')}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification('✅ Credenciales exportadas', 'success');
+  };
+
+  const printCredentials = (groupId) => {
+    const tutor = users.find(u => u.role === 'tutor' && u.id === currentUser.id);
+    if (!tutor) return;
+
+    const group = tutor.groups.find(g => g.id === groupId);
+    const groupStudents = users.filter(u => u.group === groupId);
+    const groupName = group?.customName || group?.name || groupId;
+    
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Credenciales - ${groupName}</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            h1 { color: #7c3aed; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #7c3aed; color: white; }
+            @media print { button { display: none; } }
+          </style>
+        </head>
+        <body>
+          <h1>Credenciales de Acceso - ${groupName}</h1>
+          <p>IES Luis Braille - BraiBit System</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Nick</th>
+                <th>Contraseña</th>
+                <th>Tokens</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${groupStudents.map(s => `
+                <tr>
+                  <td>${s.nick}</td>
+                  <td>${s.password}</td>
+                  <td>${s.tokens} BB</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <button onclick="window.print()" style="margin-top: 20px; padding: 10px 20px; background: #7c3aed; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Imprimir
+          </button>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+  };
   };
 
   const copyToClipboard = (text) => {
@@ -857,6 +1424,180 @@ const CNMVWarning = ({ onClose }) => {
   );
 };
 
+      {/* MODAL: GESTIÓN DE GRUPOS */}
+      {showGroupManagement && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                <Users className="w-6 h-6" />
+                Gestión de Mis Grupos
+              </h2>
+              <button
+                onClick={() => {
+                  setShowGroupManagement(false);
+                  setEditingGroup(null);
+                }}
+                className="text-white/80 hover:text-white transition"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {currentUser.groups.map((group) => {
+                const groupStudents = users.filter(u => u.group === group.id);
+                const groupName = group.customName || group.name;
+
+                return (
+                  <div key={group.id} className="bg-white/10 backdrop-blur rounded-xl p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        {editingGroup === group.id ? (
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              defaultValue={groupName}
+                              placeholder="Nombre del grupo"
+                              onKeyPress={(e) => {
+                                if (e.key === 'Enter') {
+                                  updateGroupName(group.id, e.target.value);
+                                  setEditingGroup(null);
+                                }
+                              }}
+                              className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                              autoFocus
+                            />
+                            <button
+                              onClick={(e) => {
+                                const input = e.target.parentElement.querySelector('input');
+                                updateGroupName(group.id, input.value);
+                                setEditingGroup(null);
+                              }}
+                              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                            >
+                              ✓
+                            </button>
+                            <button
+                              onClick={() => setEditingGroup(null)}
+                              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition"
+                            >
+                              ✗
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3">
+                            <h3 className="text-xl font-bold text-white">{groupName}</h3>
+                            <button
+                              onClick={() => setEditingGroup(group.id)}
+                              className="text-white/60 hover:text-white transition"
+                            >
+                              ✏️ Editar
+                            </button>
+                          </div>
+                        )}
+                        <p className="text-gray-300 mt-1">
+                          {groupStudents.length} alumno{groupStudents.length !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setShowCredentials(group.id)}
+                        className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                      >
+                        <FileText className="w-4 h-4" />
+                        Ver Credenciales
+                      </button>
+                      <button
+                        onClick={() => exportCredentials(group.id)}
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition"
+                      >
+                        📥 CSV
+                      </button>
+                      <button
+                        onClick={() => printCredentials(group.id)}
+                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
+                      >
+                        🖨️ Imprimir
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: VER CREDENCIALES */}
+      {showCredentials && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 rounded-2xl p-6 max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            {(() => {
+              const group = currentUser.groups.find(g => g.id === showCredentials);
+              const groupStudents = users.filter(u => u.group === showCredentials);
+              const groupName = group?.customName || group?.name;
+
+              return (
+                <>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-bold text-white">
+                      Credenciales - {groupName}
+                    </h2>
+                    <button
+                      onClick={() => setShowCredentials(null)}
+                      className="text-white/80 hover:text-white transition"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur rounded-xl overflow-hidden">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="bg-white/20">
+                          <th className="px-4 py-3 text-left text-white font-semibold">Nick</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Contraseña</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Tokens</th>
+                          <th className="px-4 py-3 text-left text-white font-semibold">Nombre</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {groupStudents.map((student, index) => (
+                          <tr key={student.id} className={index % 2 === 0 ? 'bg-white/5' : ''}>
+                            <td className="px-4 py-3 text-white font-mono">{student.nick}</td>
+                            <td className="px-4 py-3 text-white font-mono">{student.password}</td>
+                            <td className="px-4 py-3 text-white">{formatNumber(student.tokens)} BB</td>
+                            <td className="px-4 py-3 text-gray-300">{student.name}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="flex gap-2 mt-6">
+                    <button
+                      onClick={() => exportCredentials(showCredentials)}
+                      className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                      📥 Exportar CSV
+                    </button>
+                    <button
+                      onClick={() => printCredentials(showCredentials)}
+                      className="flex-1 px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center justify-center gap-2"
+                    >
+                      🖨️ Imprimir
+                    </button>
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
 export default BraiBitEcosystem;
 // ============================================
 // WALLET VIEW COMPONENT
@@ -997,6 +1738,20 @@ const WalletView = ({
           { id: 'overview', label: '📊 Vista General', icon: Activity },
           ...(currentUser.role === 'tutor' ? [{ id: 'assign', label: '⭐ Asignar Tareas', icon: Award }] : []),
           ...(currentUser.role === 'student' ? [{ id: 'store', label: '🛒 Tienda', icon: ShoppingCart }] : []),
+          )}
+
+          {currentUser.role === 'tutor' && (
+            <button
+              onClick={() => setShowGroupManagement(true)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition ${
+                showGroupManagement
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
+                  : 'text-gray-300 hover:bg-white/5'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              Mis Grupos
+            </button>
           { id: 'history', label: '📜 Historial', icon: History }
         ].map(tab => (
           <button
@@ -1446,12 +2201,42 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
 
 const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }) => {
   const [filter, setFilter] = useState('all');
-
-  const filteredTx = filter === 'all' 
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
     ? transactions 
-    : filter === 'received' 
-      ? transactions.filter(tx => tx.to === currentUser.ethAddress)
-      : transactions.filter(tx => tx.from === currentUser.ethAddress);
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
+  // Filtro para tutores (ven todo) y alumnos (solo sus transacciones)
+  const filteredTx = currentUser.role === "tutor" 
+    ? transactions 
+    : transactions.filter(tx => tx.from === currentUser.ethAddress || tx.to === currentUser.ethAddress);
+
+  const displayTx = filter === "all"
 
   return (
     <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
