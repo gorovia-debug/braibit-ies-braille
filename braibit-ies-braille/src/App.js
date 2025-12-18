@@ -1604,7 +1604,6 @@ const CNMVWarning = ({ onClose }) => {
     </div>
   );
 };
-    </div>
   );
 };
 
