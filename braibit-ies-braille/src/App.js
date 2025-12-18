@@ -1604,8 +1604,6 @@ const CNMVWarning = ({ onClose }) => {
     </div>
   );
 };
-  );
-};
 
 export default BraiBitEcosystem;
 // WALLET VIEW COMPONENT
