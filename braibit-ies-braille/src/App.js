@@ -98,7 +98,10 @@ const BraiBitEcosystem = () => {
         
         if (firebaseUsers && firebaseUsers.length > 0) {
           // Si hay datos en Firebase, usarlos
-          setUsers(firebaseUsers);
+          const tutorsData = firebaseUsers.filter(u => u.role === 'tutor');
+          const studentsData = firebaseUsers.filter(u => u.role === 'student');
+          setTutors(tutorsData);
+          setUsers(studentsData);
         } else {
           // Primera vez - inicializar con datos por defecto
           await initializeData();
@@ -751,17 +754,19 @@ const initialStudents = [
 
   const handleLogin = (userType, userData) => {
     if (userType === 'tutor') {
-      if (userData.password !== 'Braibit2025') {
+      const tutor = tutors.find(t => t.email === userData.email);
+      if (!tutor) {
+        showNotification('❌ Email no encontrado', 'error');
+        return;
+      }
+      if (tutor.password !== userData.password) {
         showNotification('❌ Contraseña incorrecta', 'error');
         return;
       }
-      const tutor = tutors.find(t => t.email === userData.email);
       if (tutor) {
         setCurrentUser(tutor);
         setView('wallet');
         showNotification(`✅ Bienvenido/a ${tutor.name}`, 'success');
-      } else {
-        showNotification('❌ Email no encontrado', 'error');
       }
     } else {
       const student = users.find(u => u.nick === userData.nick && u.role === 'student');
