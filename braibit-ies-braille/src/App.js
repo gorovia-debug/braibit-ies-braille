@@ -74,11 +74,6 @@ const BraiBitEcosystem = () => {
   const [copied, setCopied] = useState(false);
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showCNMVWarning, setShowCNMVWarning] = useState(true);
-  const [showCNMVWarning, setShowCNMVWarning] = useState(true);
-  const [showGroupManagement, setShowGroupManagement] = useState(false);
-  const [showCredentials, setShowCredentials] = useState(null);
-  const [editingGroup, setEditingGroup] = useState(null);
-  // Nuevos estados para gestión de grupos
   const [showGroupManagement, setShowGroupManagement] = useState(false);
   const [showCredentials, setShowCredentials] = useState(null);
   const [editingGroup, setEditingGroup] = useState(null);
