@@ -1379,7 +1379,7 @@ const initialStudents = [
           </div>
         </div>
       )}
-      }
+    </div>
   );
 };
 
