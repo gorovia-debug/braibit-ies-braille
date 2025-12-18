@@ -1203,9 +1203,6 @@ const initialStudents = [
               formatNumber={formatNumber}
             />
           )}
-        </div>
-      </div>
-    </div>
       {/* MODAL: GESTIÓN DE GRUPOS */}
       {showGroupManagement && currentUser && currentUser.role === 'tutor' && currentUser.groups && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -1379,12 +1376,10 @@ const initialStudents = [
           </div>
         </div>
     </div>
+      </div>
   );
 };
-
 export default BraiBitEcosystem;
-// ============================================
-
 const WalletView = ({
   currentUser,
   users,
