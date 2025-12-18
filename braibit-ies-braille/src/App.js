@@ -1743,20 +1743,6 @@ const WalletView = ({
           { id: 'overview', label: '📊 Vista General', icon: Activity },
           ...(currentUser.role === 'tutor' ? [{ id: 'assign', label: '⭐ Asignar Tareas', icon: Award }] : []),
           ...(currentUser.role === 'student' ? [{ id: 'store', label: '🛒 Tienda', icon: ShoppingCart }] : []),
-          )}
-
-          {currentUser.role === 'tutor' && (
-            <button
-              onClick={() => setShowGroupManagement(true)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-                showGroupManagement
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                  : 'text-gray-300 hover:bg-white/5'
-              }`}
-            >
-              <Users className="w-5 h-5" />
-              Mis Grupos
-            </button>
           { id: 'history', label: '📜 Historial', icon: History }
         ].map(tab => (
           <button
@@ -1772,6 +1758,16 @@ const WalletView = ({
             {tab.label}
           </button>
         ))}
+
+        {currentUser.role === 'tutor' && (
+          <button
+            onClick={() => setShowGroupManagement(true)}
+            className="flex items-center gap-3 px-6 py-3 rounded-xl transition text-gray-300 hover:text-white hover:bg-white/5 font-semibold whitespace-nowrap"
+          >
+            <Users className="w-5 h-5" />
+            👥 Mis Grupos
+          </button>
+        )}
       </div>
 
       {/* Tab Content */}
