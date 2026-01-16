@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Wallet, Award, ShoppingCart, Users, History, TrendingUp, 
-  Search, Copy, Check, ExternalLink, Info, BookOpen, 
+  Search, Copy, Check, Info, 
   Lock, Key, Eye, EyeOff, AlertCircle, Activity, BarChart3,
-  Coins, Shield, Globe, FileText, ChevronRight, Menu, X,
-  TrendingDown, Clock, Zap, Star, Gift, ArrowUpRight, ArrowDownRight
+  Coins, Shield, Globe, FileText, Menu, X,
+  Clock, Zap, ArrowUpRight, ArrowDownRight
 } from 'lucide-react';
 
 // ============================================
@@ -1442,8 +1442,6 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
     return 0;
   });
 
-  const EUR_USD_RATE = 0.92;
-
   return (
     <div>
       {/* Filters and Sort */}
@@ -1491,6 +1489,7 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
           const gasFee = calculateGasFee(item.price);
           const totalCost = item.price + gasFee;
           const canAfford = currentUser.tokens >= totalCost;
+          const EUR_USD_RATE = 0.92; // 1 USD = 0.92 EUR
           const valueInEUR = (item.price * bbPrice * EUR_USD_RATE).toFixed(2);
 
           return (
@@ -2353,5 +2352,3 @@ const InfoView = ({
     </div>
   );
 };
-
-
