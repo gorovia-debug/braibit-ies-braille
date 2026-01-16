@@ -1317,7 +1317,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
                 setSelectedGroup(e.target.value);
                 setSelectedStudent(null); // Reset student selection when group changes
               }}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
             >
               {groups.map(group => (
                 <option key={group.id} value={group.id}>
@@ -1332,7 +1332,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
             <select
               value={selectedStudent || ''}
               onChange={(e) => setSelectedStudent(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
               <option value="">-- Elige un alumno --</option>
               {filteredUsers.map(student => (
@@ -1352,7 +1352,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
             <select
               value={selectedTask || ''}
               onChange={(e) => setSelectedTask(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
               <option value="">-- Elige una tarea --</option>
               {tasks.map(task => (
@@ -1618,7 +1618,7 @@ const TransferTab = ({ users, currentUser, onTransfer, CURRENCY_SYMBOL, calculat
             <select
               value={selectedRecipient || ''}
               onChange={(e) => setSelectedRecipient(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
             >
               <option value="">-- Selecciona un alumno --</option>
               {users.map(user => (
@@ -1639,7 +1639,7 @@ const TransferTab = ({ users, currentUser, onTransfer, CURRENCY_SYMBOL, calculat
                 placeholder="0.00"
                 min="0"
                 step="0.01"
-                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition pr-16"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition pr-16"
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-mono text-sm">
                 {CURRENCY_SYMBOL}
@@ -1657,7 +1657,7 @@ const TransferTab = ({ users, currentUser, onTransfer, CURRENCY_SYMBOL, calculat
               value={concept}
               onChange={(e) => setConcept(e.target.value)}
               placeholder="Ej: Pago comida, Devolver préstamo..."
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
             />
           </div>
 
