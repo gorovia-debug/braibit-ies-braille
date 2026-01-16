@@ -325,18 +325,18 @@ const BraiBitEcosystem = () => {
 
   const handleLogin = (userType, userData) => {
     if (userType === 'tutor') {
-      if (userData.password !== 'Braibit2025') {
+      const tutor = tutors.find(t => t.email === userData.email);
+      if (!tutor) {
+        showNotification('❌ Email no encontrado', 'error');
+        return;
+      }
+      if (tutor.password !== userData.password) {
         showNotification('❌ Contraseña incorrecta', 'error');
         return;
       }
-      const tutor = tutors.find(t => t.email === userData.email);
-      if (tutor) {
-        setCurrentUser(tutor);
-        setView('wallet');
-        showNotification(`✅ Bienvenido/a ${tutor.name}`, 'success');
-      } else {
-        showNotification('❌ Email no encontrado', 'error');
-      }
+      setCurrentUser(tutor);
+      setView('wallet');
+      showNotification(`✅ Bienvenido/a ${tutor.name}`, 'success');
     } else {
       const student = users.find(u => u.nick === userData.nick && u.role === 'student');
       if (!student) {
@@ -2081,8 +2081,6 @@ const InfoView = ({
     .filter(tx => new Date(tx.timestamp) > new Date(Date.now() - 86400000))
     .reduce((sum, tx) => sum + tx.amount, 0);
 
-  const EUR_USD_RATE = 0.92;
-
   return (
     <div className="space-y-6">
       {/* Market Overview */}
@@ -2352,3 +2350,5 @@ const InfoView = ({
     </div>
   );
 };
+
+
