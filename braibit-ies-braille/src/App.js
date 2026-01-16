@@ -664,9 +664,11 @@ const BraiBitEcosystem = () => {
               setSelectedTab={setSelectedTab}
               assignTaskReward={assignTaskReward}
               purchaseItem={purchaseItem}
+              transferToStudent={transferToStudent}
               CURRENCY_SYMBOL={CURRENCY_SYMBOL}
               calculateGasFee={calculateGasFee}
               formatNumber={formatNumber}
+              formatAddress={formatAddress}
             />
           )}
 
@@ -948,9 +950,11 @@ const WalletView = ({
   setSelectedTab,
   assignTaskReward,
   purchaseItem,
+  transferToStudent,
   CURRENCY_SYMBOL,
   calculateGasFee,
-  formatNumber
+  formatNumber,
+  formatAddress
 }) => {
   return (
     <div className="space-y-6">
@@ -1265,6 +1269,22 @@ const OverviewTab = ({ currentUser, myTransactions, CURRENCY_SYMBOL, formatNumbe
 const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFee, formatNumber }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState('all');
+
+  // Get unique groups and count students
+  const groups = [
+    { id: 'all', name: 'Todos los grupos', count: users.length },
+    { id: 'AD-1', name: 'AD-1', count: users.filter(u => u.class === 'AD-1').length },
+    { id: 'AD-2', name: 'AD-2', count: users.filter(u => u.class === 'AD-2').length },
+    { id: 'DAW-1', name: 'DAW-1', count: users.filter(u => u.class === 'DAW-1').length },
+    { id: 'AC-1', name: 'AC-1', count: users.filter(u => u.class === 'AC-1').length },
+    { id: 'AC-2', name: 'AC-2', count: users.filter(u => u.class === 'AC-2').length }
+  ];
+
+  // Filter users by selected group
+  const filteredUsers = selectedGroup === 'all' 
+    ? users 
+    : users.filter(u => u.class === selectedGroup);
 
   const handleAssign = () => {
     if (selectedStudent && selectedTask) {
@@ -1288,6 +1308,25 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
         </h3>
 
         <div className="space-y-4">
+          {/* Group Filter */}
+          <div>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Filtrar por Grupo</label>
+            <select
+              value={selectedGroup}
+              onChange={(e) => {
+                setSelectedGroup(e.target.value);
+                setSelectedStudent(null); // Reset student selection when group changes
+              }}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+            >
+              {groups.map(group => (
+                <option key={group.id} value={group.id}>
+                  {group.name} ({group.count} alumnos)
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <label className="block text-gray-300 text-sm mb-2 font-semibold">Selecciona Alumno/a</label>
             <select
@@ -1296,12 +1335,16 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
               className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
               <option value="">-- Elige un alumno --</option>
-              {users.map(student => (
+              {filteredUsers.map(student => (
                 <option key={student.id} value={student.id}>
-                  {student.name} ({student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
+                  {student.nick} ({student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
                 </option>
               ))}
             </select>
+            <p className="text-gray-400 text-xs mt-1">
+              Mostrando {filteredUsers.length} alumno{filteredUsers.length !== 1 ? 's' : ''} 
+              {selectedGroup !== 'all' ? ` de ${selectedGroup}` : ''}
+            </p>
           </div>
 
           <div>
