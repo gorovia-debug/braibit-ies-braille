@@ -6,7 +6,6 @@ import {
   Coins, Shield, Globe, FileText, ChevronRight, Menu, X,
   TrendingDown, Clock, Zap, Star, Gift, ArrowUpRight, ArrowDownRight
 } from 'lucide-react';
-import { saveUsers, getUsers, saveBlockchain, getBlockchain, saveTasks, getTasks, saveProducts, getProducts, subscribeToUsers, subscribeToBlockchain } from './firebaseOperations';
 
 // ============================================
 // UTILIDADES Y HELPERS
@@ -66,16 +65,14 @@ const BraiBitEcosystem = () => {
   const [transactions, setTransactions] = useState([]);
   const [blocks, setBlocks] = useState([]);
   const [notification, setNotification] = useState('');
-  const [btcPrice, setBtcPrice] = useState(92340);
-  const [bbPrice, setBbPrice] = useState(0.93);
+  const [btcPrice, setBtcPrice] = useState(92340); // Precio BTC en USD (se actualizará con API)
+  const [bbPrice, setBbPrice] = useState(0.93); // Precio BB en USD (referencia)
   const [priceHistory, setPriceHistory] = useState([]);
   const [showSeedPhrase, setShowSeedPhrase] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [copied, setCopied] = useState(false);
   const [selectedTab, setSelectedTab] = useState('overview');
   const [showCNMVWarning, setShowCNMVWarning] = useState(true);
-  const [selectedGroup, setSelectedGroup] = useState('all');
-  
 
   const CURRENCY_NAME = "BraiBit";
   const CURRENCY_SYMBOL = "BB";
@@ -84,72 +81,15 @@ const BraiBitEcosystem = () => {
   const EUR_USD_RATE = 0.92; // 1 USD = 0.92 EUR (aprox)
 
   useEffect(() => {
-    // Cargar datos desde Firebase
-    const loadData = async () => {
-      try {
-        // Intentar cargar usuarios desde Firebase
-        const firebaseUsers = await getUsers();
-        
-        if (firebaseUsers && firebaseUsers.length > 0) {
-          // Separar tutores y estudiantes
-          const loadedTutors = firebaseUsers.filter(u => u.role === 'tutor');
-          const loadedStudents = firebaseUsers.filter(u => u.role === 'student');
-          setTutors(loadedTutors);
-          setUsers(loadedStudents);
-        } else {
-          // Primera vez - inicializar con datos por defecto
-          await initializeData();
-        }
-
-        // Cargar blockchain
-        const firebaseBlockchain = await getBlockchain();
-        if (firebaseBlockchain && firebaseBlockchain.length > 0) {
-          setBlocks(firebaseBlockchain);
-        }
-
-        // Cargar tareas
-        const firebaseTasks = await getTasks();
-        if (firebaseTasks && firebaseTasks.length > 0) {
-          setTasks(firebaseTasks);
-        }
-
-        // Cargar productos
-        const firebaseProducts = await getProducts();
-        if (firebaseProducts && firebaseProducts.length > 0) {
-          setStoreItems(firebaseProducts);
-        }
-      } catch (error) {
-        console.error('Error loading data from Firebase:', error);
-        // Si hay error, inicializar con datos por defecto
-        await initializeData();
-      }
-    };
-
-    loadData();
+    initializeData();
     fetchBitcoinPrice();
     startPriceSimulation();
     startBlockMining();
     
-    // Suscribirse a cambios en tiempo real
-    const unsubscribeUsers = subscribeToUsers((updatedUsers) => {
-      const loadedTutors = updatedUsers.filter(u => u.role === 'tutor');
-      const loadedStudents = updatedUsers.filter(u => u.role === 'student');
-      setTutors(loadedTutors);
-      setUsers(loadedStudents);
-    });
-
-    const unsubscribeBlockchain = subscribeToBlockchain((updatedBlockchain) => {
-      setBlocks(updatedBlockchain);
-    });
-    
     // Actualizar precio Bitcoin cada 30 segundos
     const btcInterval = setInterval(fetchBitcoinPrice, 30000);
     
-    return () => {
-      clearInterval(btcInterval);
-      unsubscribeUsers();
-      unsubscribeBlockchain();
-    };
+    return () => clearInterval(btcInterval);
   }, []);
 
   // Obtener precio real de Bitcoin
@@ -165,190 +105,42 @@ const BraiBitEcosystem = () => {
     }
   };
 
-  const initializeData = async () => {
+  const initializeData = () => {
     const initialTutors = [
-      { id: 1, name: "Margarita", email: "tutor1@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 2, name: "Rocío", email: "tutor2@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 3, name: "Elkin", email: "tutor3@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 4, name: "Ana", email: "tutor4@iesluisbraille.edu", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
+      { id: 1, name: "Rocío", email: "rocio@iesluisbraille.edu", password: "Rocio2025!", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 2, name: "Elkin", email: "elkin@iesluisbraille.edu", password: "Elkin2025!", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 3, name: "Gonzalo", email: "gonzalo@iesluisbraille.edu", password: "Gonzalo2025!", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 4, name: "Margarita", email: "margarita@iesluisbraille.edu", password: "Margarita2025!", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 5, name: "Ana", email: "ana@iesluisbraille.edu", password: "Ana2025!", role: "tutor", tokens: 10000, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
     ];
 
     const initialStudents = [
-            
-      // USUARIO DEMO (para aprender a usar la aplicación)
-      { id: 1, nick: "DEMO", name: "Usuario Demo", password: "demo", role: "student", tokens: 100, class: "DEMO", group: "DEMO", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      
-                  { id: 101, nick: "AD1-001", name: "Alumno 1", password: "AC5910", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 102, nick: "AD1-002", name: "Alumno 2", password: "AD0630", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 103, nick: "AD1-003", name: "Alumno 3", password: "AF2038", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 104, nick: "AD1-004", name: "Alumno 4", password: "BZ6329", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 105, nick: "AD1-005", name: "Alumno 5", password: "CW1313", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 106, nick: "AD1-006", name: "Alumno 6", password: "DI7288", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 107, nick: "AD1-007", name: "Alumno 7", password: "EA5327", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 108, nick: "AD1-008", name: "Alumno 8", password: "EU9023", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 109, nick: "AD1-009", name: "Alumno 9", password: "GD8393", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 110, nick: "AD1-010", name: "Alumno 10", password: "HG0361", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 111, nick: "AD1-011", name: "Alumno 11", password: "HM4225", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 112, nick: "AD1-012", name: "Alumno 12", password: "KG7188", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 113, nick: "AD1-013", name: "Alumno 13", password: "LR7750", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 114, nick: "AD1-014", name: "Alumno 14", password: "LV0207", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 115, nick: "AD1-015", name: "Alumno 15", password: "MD7843", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 116, nick: "AD1-016", name: "Alumno 16", password: "MI4782", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 117, nick: "AD1-017", name: "Alumno 17", password: "MI9157", role: "student", tokens: 0, class: "AD-1", group: "AD-1", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      
-            { id: 201, nick: "AD2-001", name: "Alumno 18", password: "MJ0140", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 202, nick: "AD2-002", name: "Alumno 19", password: "ND0532", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 203, nick: "AD2-003", name: "Alumno 20", password: "NZ0049", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 204, nick: "AD2-004", name: "Alumno 21", password: "PX1021", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 205, nick: "AD2-005", name: "Alumno 22", password: "SI0445", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 206, nick: "AD2-006", name: "Alumno 23", password: "TT0380", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 207, nick: "AD2-007", name: "Alumno 24", password: "UK5457", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 208, nick: "AD2-008", name: "Alumno 25", password: "VK8612", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 209, nick: "AD2-009", name: "Alumno 26", password: "WI1158", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 210, nick: "AD2-010", name: "Alumno 27", password: "YA5958", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 211, nick: "AD2-011", name: "Alumno 28", password: "YR2620", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 212, nick: "AD2-012", name: "Alumno 29", password: "YV9005", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 213, nick: "AD2-013", name: "Alumno 30", password: "ZD5481", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 214, nick: "AD2-014", name: "Alumno 31", password: "ZJ6302", role: "student", tokens: 0, class: "AD-2", group: "AD-2", tutorId: 1, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-
-      // TUTOR 2 - Grupo 1
-      { id: 301, nick: "G1-001", name: "Alumno 32", password: "AA1000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 302, nick: "G1-002", name: "Alumno 33", password: "AB2000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 303, nick: "G1-003", name: "Alumno 34", password: "AC3000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 304, nick: "G1-004", name: "Alumno 35", password: "AD4000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 305, nick: "G1-005", name: "Alumno 36", password: "AE5000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 306, nick: "G1-006", name: "Alumno 37", password: "AF6000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 307, nick: "G1-007", name: "Alumno 38", password: "AG7000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 308, nick: "G1-008", name: "Alumno 39", password: "AH8000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 309, nick: "G1-009", name: "Alumno 40", password: "AI9000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 310, nick: "G1-010", name: "Alumno 41", password: "AJ1100", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 311, nick: "G1-011", name: "Alumno 42", password: "AK1200", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 312, nick: "G1-012", name: "Alumno 43", password: "AL1300", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 313, nick: "G1-013", name: "Alumno 44", password: "AM1400", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 314, nick: "G1-014", name: "Alumno 45", password: "AN1500", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 315, nick: "G1-015", name: "Alumno 46", password: "AO1600", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 316, nick: "G1-016", name: "Alumno 47", password: "AP1700", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 317, nick: "G1-017", name: "Alumno 48", password: "AQ1800", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 318, nick: "G1-018", name: "Alumno 49", password: "AR1900", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 319, nick: "G1-019", name: "Alumno 50", password: "AS2000", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 320, nick: "G1-020", name: "Alumno 51", password: "AT2100", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 321, nick: "G1-021", name: "Alumno 52", password: "AU2200", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 322, nick: "G1-022", name: "Alumno 53", password: "AV2300", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 323, nick: "G1-023", name: "Alumno 54", password: "AW2400", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 324, nick: "G1-024", name: "Alumno 55", password: "AX2500", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 325, nick: "G1-025", name: "Alumno 56", password: "AY2600", role: "student", tokens: 0, class: "Grupo 1", group: "Grupo 1", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-
-      // TUTOR 2 - Grupo 2
-      { id: 401, nick: "G2-001", name: "Alumno 57", password: "BA1000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 402, nick: "G2-002", name: "Alumno 58", password: "BB2000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 403, nick: "G2-003", name: "Alumno 59", password: "BC3000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 404, nick: "G2-004", name: "Alumno 60", password: "BD4000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 405, nick: "G2-005", name: "Alumno 61", password: "BE5000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 406, nick: "G2-006", name: "Alumno 51", password: "BF6000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 407, nick: "G2-007", name: "Alumno 52", password: "BG7000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 408, nick: "G2-008", name: "Alumno 53", password: "BH8000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 409, nick: "G2-009", name: "Alumno 65", password: "BI9000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 410, nick: "G2-010", name: "Alumno 66", password: "BJ1100", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 411, nick: "G2-011", name: "Alumno 67", password: "BK1200", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 412, nick: "G2-012", name: "Alumno 68", password: "BL1300", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 413, nick: "G2-013", name: "Alumno 69", password: "BM1400", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 414, nick: "G2-014", name: "Alumno 70", password: "BN1500", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 415, nick: "G2-015", name: "Alumno 71", password: "BO1600", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 416, nick: "G2-016", name: "Alumno 72", password: "BP1700", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 417, nick: "G2-017", name: "Alumno 73", password: "BQ1800", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 418, nick: "G2-018", name: "Alumno 74", password: "BR1900", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 419, nick: "G2-019", name: "Alumno 75", password: "BS2000", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 420, nick: "G2-020", name: "Alumno 76", password: "BT2100", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 421, nick: "G2-021", name: "Alumno 77", password: "BU2200", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 422, nick: "G2-022", name: "Alumno 78", password: "BV2300", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 423, nick: "G2-023", name: "Alumno 79", password: "BW2400", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 424, nick: "G2-024", name: "Alumno 80", password: "BX2500", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 425, nick: "G2-025", name: "Alumno 81", password: "BY2600", role: "student", tokens: 0, class: "Grupo 2", group: "Grupo 2", tutorId: 2, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-
-      // TUTOR 3 - Grupo 3
-      { id: 501, nick: "G3-001", name: "Alumno 82", password: "CA1000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 502, nick: "G3-002", name: "Alumno 83", password: "CB2000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 503, nick: "G3-003", name: "Alumno 84", password: "CC3000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 504, nick: "G3-004", name: "Alumno 85", password: "CD4000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 505, nick: "G3-005", name: "Alumno 86", password: "CE5000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 506, nick: "G3-006", name: "Alumno 65", password: "CF6000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 507, nick: "G3-007", name: "Alumno 66", password: "CG7000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 508, nick: "G3-008", name: "Alumno 67", password: "CH8000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 509, nick: "G3-009", name: "Alumno 68", password: "CI9000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 510, nick: "G3-010", name: "Alumno 69", password: "CJ1100", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 511, nick: "G3-011", name: "Alumno 70", password: "CK1200", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 512, nick: "G3-012", name: "Alumno 93", password: "CL1300", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 513, nick: "G3-013", name: "Alumno 94", password: "CM1400", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 514, nick: "G3-014", name: "Alumno 95", password: "CN1500", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 515, nick: "G3-015", name: "Alumno 96", password: "CO1600", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 516, nick: "G3-016", name: "Alumno 97", password: "CP1700", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 517, nick: "G3-017", name: "Alumno 98", password: "CQ1800", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 518, nick: "G3-018", name: "Alumno 99", password: "CR1900", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 519, nick: "G3-019", name: "Alumno 100", password: "CS2000", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 520, nick: "G3-020", name: "Alumno 101", password: "CT2100", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 521, nick: "G3-021", name: "Alumno 102", password: "CU2200", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 522, nick: "G3-022", name: "Alumno 103", password: "CV2300", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 523, nick: "G3-023", name: "Alumno 104", password: "CW2400", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 524, nick: "G3-024", name: "Alumno 105", password: "CX2500", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 525, nick: "G3-025", name: "Alumno 106", password: "CY2600", role: "student", tokens: 0, class: "Grupo 3", group: "Grupo 3", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-
-      // TUTOR 3 - Grupo 4
-      { id: 601, nick: "G4-001", name: "Alumno 107", password: "DA1000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 602, nick: "G4-002", name: "Alumno 108", password: "DB2000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 603, nick: "G4-003", name: "Alumno 76", password: "DC3000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 604, nick: "G4-004", name: "Alumno 77", password: "DD4000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 605, nick: "G4-005", name: "Alumno 78", password: "DE5000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 606, nick: "G4-006", name: "Alumno 79", password: "DF6000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 607, nick: "G4-007", name: "Alumno 80", password: "DG7000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 608, nick: "G4-008", name: "Alumno 81", password: "DH8000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 609, nick: "G4-009", name: "Alumno 82", password: "DI9000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 610, nick: "G4-010", name: "Alumno 83", password: "DJ1100", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 611, nick: "G4-011", name: "Alumno 117", password: "DK1200", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 612, nick: "G4-012", name: "Alumno 118", password: "DL1300", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 613, nick: "G4-013", name: "Alumno 119", password: "DM1400", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 614, nick: "G4-014", name: "Alumno 120", password: "DN1500", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 615, nick: "G4-015", name: "Alumno 121", password: "DO1600", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 616, nick: "G4-016", name: "Alumno 122", password: "DP1700", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 617, nick: "G4-017", name: "Alumno 123", password: "DQ1800", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 618, nick: "G4-018", name: "Alumno 124", password: "DR1900", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 619, nick: "G4-019", name: "Alumno 125", password: "DS2000", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 620, nick: "G4-020", name: "Alumno 126", password: "DT2100", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 621, nick: "G4-021", name: "Alumno 127", password: "DU2200", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 622, nick: "G4-022", name: "Alumno 128", password: "DV2300", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 623, nick: "G4-023", name: "Alumno 129", password: "DW2400", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 624, nick: "G4-024", name: "Alumno 130", password: "DX2500", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 625, nick: "G4-025", name: "Alumno 131", password: "DY2600", role: "student", tokens: 0, class: "Grupo 4", group: "Grupo 4", tutorId: 3, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-
-      // TUTOR 4 - Grupo 5
-      { id: 701, nick: "G5-001", name: "Alumno 132", password: "EA1000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 702, nick: "G5-002", name: "Alumno 133", password: "EB2000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 703, nick: "G5-003", name: "Alumno 134", password: "EC3000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 704, nick: "G5-004", name: "Alumno 135", password: "ED4000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 705, nick: "G5-005", name: "Alumno 136", password: "EE5000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 706, nick: "G5-006", name: "Alumno 137", password: "EF6000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 707, nick: "G5-007", name: "Alumno 138", password: "EG7000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 708, nick: "G5-008", name: "Alumno 139", password: "EH8000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 709, nick: "G5-009", name: "Alumno 140", password: "EI9000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 710, nick: "G5-010", name: "Alumno 141", password: "EJ1100", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 711, nick: "G5-011", name: "Alumno 142", password: "EK1200", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 712, nick: "G5-012", name: "Alumno 143", password: "EL1300", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 713, nick: "G5-013", name: "Alumno 144", password: "EM1400", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 714, nick: "G5-014", name: "Alumno 145", password: "EN1500", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 715, nick: "G5-015", name: "Alumno 146", password: "EO1600", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 716, nick: "G5-016", name: "Alumno 147", password: "EP1700", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 717, nick: "G5-017", name: "Alumno 148", password: "EQ1800", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 718, nick: "G5-018", name: "Alumno 149", password: "ER1900", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 719, nick: "G5-019", name: "Alumno 150", password: "ES2000", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 720, nick: "G5-020", name: "Alumno 151", password: "ET2100", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 721, nick: "G5-021", name: "Alumno 152", password: "EU2200", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 722, nick: "G5-022", name: "Alumno 153", password: "EV2300", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 723, nick: "G5-023", name: "Alumno 154", password: "EW2400", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 724, nick: "G5-024", name: "Alumno 155", password: "EX2500", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 725, nick: "G5-025", name: "Alumno 156", password: "EY2600", role: "student", tokens: 0, class: "Grupo 5", group: "Grupo 5", tutorId: 4, ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
+      // AD-1 (3 alumnos)
+      { id: 101, nick: "BRAIBIT-AD1-001", name: "Alumno 1 AD-1", password: "ad1.001", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 102, nick: "BRAIBIT-AD1-002", name: "Alumno 2 AD-1", password: "ad1.002", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 103, nick: "BRAIBIT-AD1-003", name: "Alumno 3 AD-1", password: "ad1.003", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // AD-2 (3 alumnos)
+      { id: 104, nick: "BRAIBIT-AD2-001", name: "Alumno 1 AD-2", password: "ad2.001", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 105, nick: "BRAIBIT-AD2-002", name: "Alumno 2 AD-2", password: "ad2.002", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 106, nick: "BRAIBIT-AD2-003", name: "Alumno 3 AD-2", password: "ad2.003", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // DAW-1 (3 alumnos)
+      { id: 107, nick: "BRAIBIT-DAW1-001", name: "Alumno 1 DAW-1", password: "daw1.001", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 108, nick: "BRAIBIT-DAW1-002", name: "Alumno 2 DAW-1", password: "daw1.002", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 109, nick: "BRAIBIT-DAW1-003", name: "Alumno 3 DAW-1", password: "daw1.003", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // AC-1 (3 alumnos)
+      { id: 110, nick: "BRAIBIT-AC1-001", name: "Alumno 1 AC-1", password: "ac1.001", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 111, nick: "BRAIBIT-AC1-002", name: "Alumno 2 AC-1", password: "ac1.002", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 112, nick: "BRAIBIT-AC1-003", name: "Alumno 3 AC-1", password: "ac1.003", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // AC-2 (3 alumnos)
+      { id: 113, nick: "BRAIBIT-AC2-001", name: "Alumno 1 AC-2", password: "ac2.001", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 114, nick: "BRAIBIT-AC2-002", name: "Alumno 2 AC-2", password: "ac2.002", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 115, nick: "BRAIBIT-AC2-003", name: "Alumno 3 AC-2", password: "ac2.003", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // DEMO
+      { id: 116, nick: "DEMO-TUTOR", name: "Vista Demo", password: "DemoVista2025!", role: "student", tokens: 100, class: "Demo", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
     ];
 
     const initialTasks = [
-      { id: 1, name: "Apoyo en tarea", reward: 50, category: "Educativo" },
+      { id: 1, name: "Ayudar en biblioteca", reward: 50, category: "Servicio" },
       { id: 2, name: "Tutoría a compañeros", reward: 100, category: "Educativo" },
       { id: 3, name: "Limpieza de espacios comunes", reward: 30, category: "Servicio" },
       { id: 4, name: "Organizar evento escolar", reward: 150, category: "Organización" },
@@ -400,13 +192,6 @@ const BraiBitEcosystem = () => {
     }));
 
     setTransactions(initialTxs);
-
-    // Guardar datos iniciales en Firebase
-    const allUsers = [...initialTutors, ...initialStudents];
-    saveUsers(allUsers);
-    saveTasks(initialTasks);
-    saveProducts(initialStore);
-    saveBlockchain([]);
   };
 
   const startPriceSimulation = () => {
@@ -504,7 +289,6 @@ const BraiBitEcosystem = () => {
     };
 
     setUsers(updatedUsers);
-    saveUsers(updatedUsers); // Guardar en Firebase
     setTransactions([transaction, ...transactions]);
     showNotification(`✅ ${task.reward} ${CURRENCY_SYMBOL} asignados a ${student.name}`, 'success');
   };
@@ -549,66 +333,62 @@ const BraiBitEcosystem = () => {
 
     setCurrentUser(updatedUser);
     setUsers(updatedUsers);
-    saveUsers(updatedUsers); // Guardar en Firebase
     setStoreItems(updatedStore);
-    saveProducts(updatedStore); // Guardar en Firebase
     setTransactions([transaction, ...transactions]);
     showNotification(`✅ Has comprado: ${item.name}`, 'success');
   };
 
-  const cancelTransaction = (transactionId) => {
-    const transaction = transactions.find(t => t.id === transactionId);
-    if (!transaction) {
-      showNotification('❌ Transacción no encontrada', 'error');
+  // Transfer BB between students (P2P)
+  const transferToStudent = (recipientId, amount, concept) => {
+    const recipient = users.find(u => u.id === recipientId);
+    if (!recipient) {
+      showNotification('❌ Destinatario no encontrado', 'error');
       return;
     }
 
-    // Verificar que la transacción no esté ya cancelada
-    if (transaction.status === 'cancelled') {
-      showNotification('❌ Esta transacción ya está cancelada', 'error');
+    const gasFee = calculateGasFee(amount);
+    const totalCost = amount + gasFee;
+
+    if (currentUser.tokens < totalCost) {
+      showNotification(`❌ Saldo insuficiente. Necesitas ${formatNumber(totalCost)} ${CURRENCY_SYMBOL} (incluye ${gasFee.toFixed(2)} ${CURRENCY_SYMBOL} de gas)`, 'error');
       return;
     }
 
-    // Solo se pueden cancelar transacciones de tipo task_reward
-    if (transaction.type !== 'task_reward') {
-      showNotification('❌ Solo se pueden cancelar asignaciones de tareas', 'error');
-      return;
-    }
+    // Create transaction
+    const newTx = {
+      id: `tx_${Date.now()}`,
+      hash: generateTxHash(),
+      from: currentUser.ethAddress,
+      to: recipient.ethAddress,
+      fromName: currentUser.name || currentUser.nick,
+      toName: recipient.name || recipient.nick,
+      amount: amount,
+      gasFee: gasFee,
+      type: 'transfer',
+      description: concept || 'Transferencia P2P',
+      timestamp: new Date().toISOString(),
+      blockNumber: blocks.length > 0 ? blocks[0].number + 1 : 1,
+      confirmations: 0,
+      status: 'pending'
+    };
 
-    // Encontrar al estudiante que recibió los tokens
-    const student = users.find(u => u.ethAddress === transaction.to);
-    if (!student) {
-      showNotification('❌ Estudiante no encontrado', 'error');
-      return;
-    }
+    // Update balances
+    const updatedCurrentUser = { ...currentUser, tokens: currentUser.tokens - totalCost };
+    const updatedUsers = users.map(u => {
+      if (u.id === currentUser.id) {
+        return updatedCurrentUser;
+      }
+      if (u.id === recipientId) {
+        return { ...u, tokens: u.tokens + amount };
+      }
+      return u;
+    });
 
-    // Calcular cuánto recibió el estudiante (amount - gasFee)
-    const netAmount = transaction.amount - transaction.gasFee;
-
-    // Verificar que el estudiante tenga suficiente saldo
-    if (student.tokens < netAmount) {
-      showNotification(`❌ El alumno no tiene suficiente saldo. Necesita ${netAmount.toFixed(2)} ${CURRENCY_SYMBOL} pero solo tiene ${student.tokens.toFixed(2)} ${CURRENCY_SYMBOL}`, 'error');
-      return;
-    }
-
-    // Restar los tokens al estudiante
-    const updatedUsers = users.map(u => 
-      u.id === student.id 
-        ? { ...u, tokens: u.tokens - netAmount } 
-        : u
-    );
-
-    // Marcar la transacción como cancelada
-    const updatedTransactions = transactions.map(t => 
-      t.id === transactionId 
-        ? { ...t, status: 'cancelled' } 
-        : t
-    );
-
+    setCurrentUser(updatedCurrentUser);
     setUsers(updatedUsers);
-    saveUsers([...tutors, ...updatedUsers]); // Guardar en Firebase
-    setTransactions(updatedTransactions);
-    showNotification(`✅ Transacción cancelada. Se han restado ${netAmount.toFixed(2)} ${CURRENCY_SYMBOL} a ${student.name}`, 'success');
+    setTransactions([newTx, ...transactions]);
+    
+    showNotification(`✅ Transferencia exitosa!\n\n💸 Enviaste ${formatNumber(amount)} ${CURRENCY_SYMBOL}\n👤 A: ${recipient.name || recipient.nick}\n⛽ Gas: ${gasFee.toFixed(2)} ${CURRENCY_SYMBOL}\n📝 Hash: ${formatAddress(newTx.hash)}`, 'success');
   };
 
   const showNotification = (message, type = 'success') => {
@@ -793,12 +573,9 @@ const BraiBitEcosystem = () => {
               setSelectedTab={setSelectedTab}
               assignTaskReward={assignTaskReward}
               purchaseItem={purchaseItem}
-              cancelTransaction={cancelTransaction}
               CURRENCY_SYMBOL={CURRENCY_SYMBOL}
               calculateGasFee={calculateGasFee}
               formatNumber={formatNumber}
-              selectedGroup={selectedGroup}
-              setSelectedGroup={setSelectedGroup}
             />
           )}
 
@@ -1080,12 +857,9 @@ const WalletView = ({
   setSelectedTab,
   assignTaskReward,
   purchaseItem,
-  cancelTransaction,
   CURRENCY_SYMBOL,
   calculateGasFee,
-  formatNumber,
-  selectedGroup,
-  setSelectedGroup
+  formatNumber
 }) => {
   return (
     <div className="space-y-6">
@@ -1199,6 +973,7 @@ const WalletView = ({
         {[
           { id: 'overview', label: '📊 Vista General', icon: Activity },
           ...(currentUser.role === 'tutor' ? [{ id: 'assign', label: '⭐ Asignar Tareas', icon: Award }] : []),
+          ...(currentUser.role === 'student' ? [{ id: 'transfer', label: '💸 Enviar BB', icon: ArrowUpRight }] : []),
           ...(currentUser.role === 'student' ? [{ id: 'store', label: '🛒 Tienda', icon: ShoppingCart }] : []),
           { id: 'history', label: '📜 Historial', icon: History }
         ].map(tab => (
@@ -1224,9 +999,7 @@ const WalletView = ({
           myTransactions={myTransactions} 
           CURRENCY_SYMBOL={CURRENCY_SYMBOL}
           formatNumber={formatNumber}
-              selectedGroup={selectedGroup}
-              setSelectedGroup={setSelectedGroup}
-            />
+        />
       )}
 
       {selectedTab === 'assign' && currentUser.role === 'tutor' && (
@@ -1237,9 +1010,7 @@ const WalletView = ({
           CURRENCY_SYMBOL={CURRENCY_SYMBOL}
           calculateGasFee={calculateGasFee}
           formatNumber={formatNumber}
-              selectedGroup={selectedGroup}
-              setSelectedGroup={setSelectedGroup}
-            />
+        />
       )}
 
       {selectedTab === 'store' && currentUser.role === 'student' && (
@@ -1251,21 +1022,28 @@ const WalletView = ({
           bbPrice={bbPrice}
           calculateGasFee={calculateGasFee}
           formatNumber={formatNumber}
-              selectedGroup={selectedGroup}
-              setSelectedGroup={setSelectedGroup}
-            />
+        />
+      )}
+
+      {selectedTab === 'transfer' && currentUser.role === 'student' && (
+        <TransferTab 
+          users={users.filter(u => u.role === 'student' && u.id !== currentUser.id)} 
+          currentUser={currentUser} 
+          onTransfer={transferToStudent} 
+          CURRENCY_SYMBOL={CURRENCY_SYMBOL}
+          calculateGasFee={calculateGasFee}
+          formatNumber={formatNumber}
+          formatAddress={formatAddress}
+        />
       )}
 
       {selectedTab === 'history' && (
         <HistoryTab 
           transactions={myTransactions} 
           currentUser={currentUser} 
-          cancelTransaction={cancelTransaction}
           CURRENCY_SYMBOL={CURRENCY_SYMBOL}
           formatNumber={formatNumber}
-              selectedGroup={selectedGroup}
-              setSelectedGroup={setSelectedGroup}
-            />
+        />
       )}
     </div>
   );
@@ -1393,20 +1171,9 @@ const OverviewTab = ({ currentUser, myTransactions, CURRENCY_SYMBOL, formatNumbe
 // ASSIGN TASK TAB (TUTORES)
 // ============================================
 
-const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFee, formatNumber,
-  selectedGroup,
-  setSelectedGroup
-}) => {
+const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFee, formatNumber }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
-
-  // Obtener grupos únicos de los alumnos
-  const availableGroups = ['all', ...new Set(users.map(u => u.group).filter(Boolean))];
-  
-  // Filtrar alumnos por grupo seleccionado
-  const filteredUsers = selectedGroup === 'all' 
-    ? users 
-    : users.filter(u => u.group === selectedGroup);
 
   const handleAssign = () => {
     if (selectedStudent && selectedTask) {
@@ -1421,33 +1188,7 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
   const netAmount = selectedTaskData ? selectedTaskData.reward - gasFee : 0;
 
   return (
-    <div className="space-y-6">
-      {/* Selector de Grupos */}
-      {availableGroups.length > 2 && (
-        <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 backdrop-blur-xl rounded-2xl p-4 border border-indigo-500/30">
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-gray-300 font-semibold">🎯 Filtrar por grupo:</span>
-            {availableGroups.map(group => (
-              <button
-                key={group}
-                onClick={() => setSelectedGroup(group)}
-                className={`px-4 py-2 rounded-xl font-semibold transition ${
-                  selectedGroup === group
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50'
-                    : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
-                }`}
-              >
-                {group === 'all' ? '📚 Todos' : `📖 ${group}`}
-              </button>
-            ))}
-          </div>
-          <p className="text-gray-400 text-sm mt-2">
-            Mostrando {filteredUsers.length} alumno{filteredUsers.length !== 1 ? 's' : ''}
-          </p>
-        </div>
-      )}
-      
-      <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid md:grid-cols-2 gap-6">
       {/* Assignment Form */}
       <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
         <h3 className="text-white font-bold text-xl mb-4 flex items-center gap-2">
@@ -1456,20 +1197,17 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
         </h3>
 
         <div className="space-y-4">
-          {/* Selector de Alumnos */}
           <div>
-            <label className="block text-gray-300 text-sm mb-2 font-semibold">
-              👤 Selecciona Alumno/a
-            </label>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Selecciona Alumno/a</label>
             <select
               value={selectedStudent || ''}
               onChange={(e) => setSelectedStudent(Number(e.target.value))}
-              className="w-full px-4 py-3 bg-gray-800 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition"
             >
               <option value="">-- Elige un alumno --</option>
-              {filteredUsers.map(student => (
+              {users.map(student => (
                 <option key={student.id} value={student.id}>
-                  {student.name} ({student.group || student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
+                  {student.name} ({student.class}) - {formatNumber(student.tokens)} {CURRENCY_SYMBOL}
                 </option>
               ))}
             </select>
@@ -1545,7 +1283,6 @@ const AssignTaskTab = ({ users, tasks, onAssign, CURRENCY_SYMBOL, calculateGasFe
             </div>
           ))}
         </div>
-      </div>
       </div>
     </div>
   );
@@ -1691,10 +1428,183 @@ const StoreTab = ({ items, currentUser, onPurchase, CURRENCY_SYMBOL, bbPrice, ca
 };
 
 // ============================================
+// TRANSFER TAB - P2P Transfers (STUDENTS)
+// ============================================
+
+const TransferTab = ({ users, currentUser, onTransfer, CURRENCY_SYMBOL, calculateGasFee, formatNumber, formatAddress }) => {
+  const [selectedRecipient, setSelectedRecipient] = useState(null);
+  const [amount, setAmount] = useState('');
+  const [concept, setConcept] = useState('');
+
+  const handleTransfer = () => {
+    const amountNum = parseFloat(amount);
+    
+    if (!selectedRecipient) {
+      alert('⚠️ Selecciona un destinatario');
+      return;
+    }
+    
+    if (!amountNum || amountNum <= 0) {
+      alert('⚠️ Introduce una cantidad válida');
+      return;
+    }
+
+    const gasFee = calculateGasFee(amountNum);
+    const totalCost = amountNum + gasFee;
+
+    if (currentUser.tokens < totalCost) {
+      alert(`❌ Saldo insuficiente\n\nNecesitas: ${formatNumber(totalCost)} ${CURRENCY_SYMBOL}\nTienes: ${formatNumber(currentUser.tokens)} ${CURRENCY_SYMBOL}`);
+      return;
+    }
+
+    if (window.confirm(`¿Confirmar transferencia?\n\n💸 Cantidad: ${formatNumber(amountNum)} ${CURRENCY_SYMBOL}\n⛽ Gas: ${gasFee.toFixed(2)} ${CURRENCY_SYMBOL}\n💰 Total: ${formatNumber(totalCost)} ${CURRENCY_SYMBOL}\n\n👤 Destinatario: ${users.find(u => u.id === selectedRecipient)?.name || users.find(u => u.id === selectedRecipient)?.nick}`)) {
+      onTransfer(selectedRecipient, amountNum, concept);
+      setSelectedRecipient(null);
+      setAmount('');
+      setConcept('');
+    }
+  };
+
+  const selectedUser = users.find(u => u.id === selectedRecipient);
+  const amountNum = parseFloat(amount) || 0;
+  const gasFee = amountNum > 0 ? calculateGasFee(amountNum) : 0;
+  const totalCost = amountNum + gasFee;
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      {/* Transfer Form */}
+      <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-xl rounded-2xl p-6 border border-blue-500/30">
+        <h3 className="text-white font-bold text-xl mb-4 flex items-center gap-2">
+          <ArrowUpRight className="w-6 h-6 text-blue-400" />
+          Enviar BraiBits
+        </h3>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Destinatario</label>
+            <select
+              value={selectedRecipient || ''}
+              onChange={(e) => setSelectedRecipient(Number(e.target.value))}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+            >
+              <option value="">-- Selecciona un alumno --</option>
+              {users.map(user => (
+                <option key={user.id} value={user.id}>
+                  {user.nick} - {user.class} ({formatNumber(user.tokens)} {CURRENCY_SYMBOL})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Cantidad</label>
+            <div className="relative">
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition pr-16"
+              />
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 font-mono text-sm">
+                {CURRENCY_SYMBOL}
+              </span>
+            </div>
+            <p className="text-gray-400 text-xs mt-1">
+              Balance disponible: {formatNumber(currentUser.tokens)} {CURRENCY_SYMBOL}
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-gray-300 text-sm mb-2 font-semibold">Concepto (opcional)</label>
+            <input
+              type="text"
+              value={concept}
+              onChange={(e) => setConcept(e.target.value)}
+              placeholder="Ej: Pago comida, Devolver préstamo..."
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition"
+            />
+          </div>
+
+          {amountNum > 0 && selectedUser && (
+            <div className="bg-black/30 rounded-xl p-4 border border-blue-500/30">
+              <p className="text-blue-300 text-sm font-semibold mb-2">⚡ Resumen:</p>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Cantidad:</span>
+                  <span className="text-white font-mono">{formatNumber(amountNum)} {CURRENCY_SYMBOL}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Gas fee:</span>
+                  <span className="text-yellow-400 font-mono">{gasFee.toFixed(2)} {CURRENCY_SYMBOL}</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-white/10">
+                  <span className="text-gray-300 font-semibold">Total:</span>
+                  <span className="text-white font-mono font-bold">{formatNumber(totalCost)} {CURRENCY_SYMBOL}</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-white/10 mt-2">
+                  <span className="text-gray-400">Destinatario:</span>
+                  <span className="text-white font-semibold">{selectedUser.nick}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={handleTransfer}
+            disabled={!selectedRecipient || !amountNum || amountNum <= 0}
+            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-4 rounded-xl font-bold hover:from-blue-600 hover:to-cyan-600 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <ArrowUpRight size={20} />
+            Enviar BraiBits
+          </button>
+        </div>
+      </div>
+
+      {/* Info Panel */}
+      <div className="space-y-4">
+        <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="bg-purple-500/20 p-2 rounded-lg">
+              <Info className="w-5 h-5 text-purple-400" />
+            </div>
+            <h3 className="text-white font-bold">ℹ️ Sobre las transferencias</h3>
+          </div>
+          <div className="text-gray-300 text-sm space-y-2">
+            <p>• Puedes enviar BB a cualquier alumno</p>
+            <p>• Las transferencias son <strong>instantáneas</strong></p>
+            <p>• Se cobra un <strong>gas fee del 0.1%</strong> (mínimo 0.1 BB)</p>
+            <p>• Todas las transferencias quedan <strong>registradas públicamente</strong> en la blockchain</p>
+            <p>• El destinatario las verá en su historial</p>
+          </div>
+        </div>
+
+        <div className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 backdrop-blur-xl rounded-2xl p-6 border border-yellow-500/30">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="bg-yellow-500/20 p-2 rounded-lg">
+              <Shield className="w-5 h-5 text-yellow-400" />
+            </div>
+            <h3 className="text-white font-bold">⚠️ Importante</h3>
+          </div>
+          <div className="text-gray-300 text-sm space-y-2">
+            <p>• Verifica bien el destinatario antes de enviar</p>
+            <p>• Las transferencias <strong>NO se pueden revertir</strong></p>
+            <p>• Asegúrate de tener suficiente balance para el gas fee</p>
+            <p>• Todas las transacciones son transparentes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============================================
 // HISTORY TAB
 // ============================================
 
-const HistoryTab = ({ transactions, currentUser, cancelTransaction, CURRENCY_SYMBOL, formatNumber }) => {
+const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }) => {
   const [filter, setFilter] = useState('all');
 
   const filteredTx = filter === 'all' 
@@ -1702,12 +1612,6 @@ const HistoryTab = ({ transactions, currentUser, cancelTransaction, CURRENCY_SYM
     : filter === 'received' 
       ? transactions.filter(tx => tx.to === currentUser.ethAddress)
       : transactions.filter(tx => tx.from === currentUser.ethAddress);
-
-  const handleCancel = (txId) => {
-    if (window.confirm('¿Estás seguro de que quieres anular esta transacción? Se restarán los tokens al alumno.')) {
-      cancelTransaction(txId);
-    }
-  };
 
   return (
     <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-500/30">
@@ -1794,19 +1698,12 @@ const HistoryTab = ({ transactions, currentUser, cancelTransaction, CURRENCY_SYM
                     <span className={`inline-flex items-center gap-1 px-2 py-1 rounded ${
                       tx.status === 'confirmed' 
                         ? 'bg-green-500/20 text-green-400' 
-                        : tx.status === 'cancelled'
-                        ? 'bg-red-500/20 text-red-400'
                         : 'bg-yellow-500/20 text-yellow-400'
                     }`}>
                       {tx.status === 'confirmed' ? (
                         <>
                           <Check size={12} />
                           Confirmada
-                        </>
-                      ) : tx.status === 'cancelled' ? (
-                        <>
-                          <X size={12} />
-                          Cancelada
                         </>
                       ) : (
                         <>
@@ -1821,19 +1718,6 @@ const HistoryTab = ({ transactions, currentUser, cancelTransaction, CURRENCY_SYM
                     <p className="text-white">{formatDate(tx.timestamp)}</p>
                   </div>
                 </div>
-                
-                {/* Botón de anular (solo para tutores y transacciones de tipo task_reward no canceladas) */}
-                {currentUser.role === 'tutor' && tx.type === 'task_reward' && tx.status !== 'cancelled' && (
-                  <div className="mt-3 pt-3 border-t border-white/10">
-                    <button
-                      onClick={() => handleCancel(tx.id)}
-                      className="w-full bg-red-500/20 hover:bg-red-500/30 text-red-400 py-2 px-4 rounded-lg font-semibold transition flex items-center justify-center gap-2 border border-red-500/30"
-                    >
-                      <X size={16} />
-                      Anular Transacción
-                    </button>
-                  </div>
-                )}
               </div>
             );
           })}
@@ -2335,6 +2219,5 @@ const InfoView = ({
     </div>
   );
 };
-
 
 
