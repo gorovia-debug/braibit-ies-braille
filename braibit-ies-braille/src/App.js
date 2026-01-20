@@ -115,119 +115,122 @@ const BraiBitEcosystem = () => {
     ];
 
     const initialStudents = [
+    const initialStudents = [
       // AD-1 (17 alumnos)
-      { id: 101, nick: "BRAIBIT-AD1-001", name: "Alumno 1 AD-1", password: "ad1.001", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 102, nick: "BRAIBIT-AD1-002", name: "Alumno 2 AD-1", password: "ad1.002", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 103, nick: "BRAIBIT-AD1-003", name: "Alumno 3 AD-1", password: "ad1.003", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 104, nick: "BRAIBIT-AD1-004", name: "Alumno 4 AD-1", password: "ad1.004", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 105, nick: "BRAIBIT-AD1-005", name: "Alumno 5 AD-1", password: "ad1.005", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 106, nick: "BRAIBIT-AD1-006", name: "Alumno 6 AD-1", password: "ad1.006", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 107, nick: "BRAIBIT-AD1-007", name: "Alumno 7 AD-1", password: "ad1.007", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 108, nick: "BRAIBIT-AD1-008", name: "Alumno 8 AD-1", password: "ad1.008", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 109, nick: "BRAIBIT-AD1-009", name: "Alumno 9 AD-1", password: "ad1.009", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 110, nick: "BRAIBIT-AD1-010", name: "Alumno 10 AD-1", password: "ad1.010", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 111, nick: "BRAIBIT-AD1-011", name: "Alumno 11 AD-1", password: "ad1.011", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 112, nick: "BRAIBIT-AD1-012", name: "Alumno 12 AD-1", password: "ad1.012", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 113, nick: "BRAIBIT-AD1-013", name: "Alumno 13 AD-1", password: "ad1.013", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 114, nick: "BRAIBIT-AD1-014", name: "Alumno 14 AD-1", password: "ad1.014", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 115, nick: "BRAIBIT-AD1-015", name: "Alumno 15 AD-1", password: "ad1.015", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 116, nick: "BRAIBIT-AD1-016", name: "Alumno 16 AD-1", password: "ad1.016", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 117, nick: "BRAIBIT-AD1-017", name: "Alumno 17 AD-1", password: "ad1.017", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 101, nick: "BRAIBIT-AD1-001", name: "Alumno 1 AD-1", password: "ad1.001!", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 102, nick: "BRAIBIT-AD1-002", name: "Alumno 2 AD-1", password: "ad1.002@", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 103, nick: "BRAIBIT-AD1-003", name: "Alumno 3 AD-1", password: "ad1.003#", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 104, nick: "BRAIBIT-AD1-004", name: "Alumno 4 AD-1", password: "ad1.004$", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 105, nick: "BRAIBIT-AD1-005", name: "Alumno 5 AD-1", password: "ad1.005%", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 106, nick: "BRAIBIT-AD1-006", name: "Alumno 6 AD-1", password: "ad1.006&", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 107, nick: "BRAIBIT-AD1-007", name: "Alumno 7 AD-1", password: "ad1.007*", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 108, nick: "BRAIBIT-AD1-008", name: "Alumno 8 AD-1", password: "ad1.008+", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 109, nick: "BRAIBIT-AD1-009", name: "Alumno 9 AD-1", password: "ad1.009=", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 110, nick: "BRAIBIT-AD1-010", name: "Alumno 10 AD-1", password: "ad1.010-", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 111, nick: "BRAIBIT-AD1-011", name: "Alumno 11 AD-1", password: "ad1.011_", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 112, nick: "BRAIBIT-AD1-012", name: "Alumno 12 AD-1", password: "ad1.012?", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 113, nick: "BRAIBIT-AD1-013", name: "Alumno 13 AD-1", password: "ad1.013/", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 114, nick: "BRAIBIT-AD1-014", name: "Alumno 14 AD-1", password: "ad1.014:", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 115, nick: "BRAIBIT-AD1-015", name: "Alumno 15 AD-1", password: "ad1.015;", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 116, nick: "BRAIBIT-AD1-016", name: "Alumno 16 AD-1", password: "ad1.016.", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 117, nick: "BRAIBIT-AD1-017", name: "Alumno 17 AD-1", password: "ad1.017,", role: "student", tokens: 0, class: "AD-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
       // AD-2 (14 alumnos)
-      { id: 118, nick: "BRAIBIT-AD2-001", name: "Alumno 1 AD-2", password: "ad2.001", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 119, nick: "BRAIBIT-AD2-002", name: "Alumno 2 AD-2", password: "ad2.002", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 120, nick: "BRAIBIT-AD2-003", name: "Alumno 3 AD-2", password: "ad2.003", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 121, nick: "BRAIBIT-AD2-004", name: "Alumno 4 AD-2", password: "ad2.004", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 122, nick: "BRAIBIT-AD2-005", name: "Alumno 5 AD-2", password: "ad2.005", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 123, nick: "BRAIBIT-AD2-006", name: "Alumno 6 AD-2", password: "ad2.006", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 124, nick: "BRAIBIT-AD2-007", name: "Alumno 7 AD-2", password: "ad2.007", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 125, nick: "BRAIBIT-AD2-008", name: "Alumno 8 AD-2", password: "ad2.008", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 126, nick: "BRAIBIT-AD2-009", name: "Alumno 9 AD-2", password: "ad2.009", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 127, nick: "BRAIBIT-AD2-010", name: "Alumno 10 AD-2", password: "ad2.010", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 128, nick: "BRAIBIT-AD2-011", name: "Alumno 11 AD-2", password: "ad2.011", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 129, nick: "BRAIBIT-AD2-012", name: "Alumno 12 AD-2", password: "ad2.012", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 130, nick: "BRAIBIT-AD2-013", name: "Alumno 13 AD-2", password: "ad2.013", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 131, nick: "BRAIBIT-AD2-014", name: "Alumno 14 AD-2", password: "ad2.014", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 118, nick: "BRAIBIT-AD2-001", name: "Alumno 1 AD-2", password: "ad2.001!", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 119, nick: "BRAIBIT-AD2-002", name: "Alumno 2 AD-2", password: "ad2.002@", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 120, nick: "BRAIBIT-AD2-003", name: "Alumno 3 AD-2", password: "ad2.003#", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 121, nick: "BRAIBIT-AD2-004", name: "Alumno 4 AD-2", password: "ad2.004$", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 122, nick: "BRAIBIT-AD2-005", name: "Alumno 5 AD-2", password: "ad2.005%", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 123, nick: "BRAIBIT-AD2-006", name: "Alumno 6 AD-2", password: "ad2.006&", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 124, nick: "BRAIBIT-AD2-007", name: "Alumno 7 AD-2", password: "ad2.007*", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 125, nick: "BRAIBIT-AD2-008", name: "Alumno 8 AD-2", password: "ad2.008+", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 126, nick: "BRAIBIT-AD2-009", name: "Alumno 9 AD-2", password: "ad2.009=", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 127, nick: "BRAIBIT-AD2-010", name: "Alumno 10 AD-2", password: "ad2.010-", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 128, nick: "BRAIBIT-AD2-011", name: "Alumno 11 AD-2", password: "ad2.011_", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 129, nick: "BRAIBIT-AD2-012", name: "Alumno 12 AD-2", password: "ad2.012?", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 130, nick: "BRAIBIT-AD2-013", name: "Alumno 13 AD-2", password: "ad2.013/", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 131, nick: "BRAIBIT-AD2-014", name: "Alumno 14 AD-2", password: "ad2.014:", role: "student", tokens: 0, class: "AD-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
       // DAW-1 (25 alumnos)
-      { id: 132, nick: "BRAIBIT-DAW1-001", name: "Alumno 1 DAW-1", password: "daw1.001", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 133, nick: "BRAIBIT-DAW1-002", name: "Alumno 2 DAW-1", password: "daw1.002", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 134, nick: "BRAIBIT-DAW1-003", name: "Alumno 3 DAW-1", password: "daw1.003", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 135, nick: "BRAIBIT-DAW1-004", name: "Alumno 4 DAW-1", password: "daw1.004", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 136, nick: "BRAIBIT-DAW1-005", name: "Alumno 5 DAW-1", password: "daw1.005", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 137, nick: "BRAIBIT-DAW1-006", name: "Alumno 6 DAW-1", password: "daw1.006", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 138, nick: "BRAIBIT-DAW1-007", name: "Alumno 7 DAW-1", password: "daw1.007", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 139, nick: "BRAIBIT-DAW1-008", name: "Alumno 8 DAW-1", password: "daw1.008", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 140, nick: "BRAIBIT-DAW1-009", name: "Alumno 9 DAW-1", password: "daw1.009", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 141, nick: "BRAIBIT-DAW1-010", name: "Alumno 10 DAW-1", password: "daw1.010", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 142, nick: "BRAIBIT-DAW1-011", name: "Alumno 11 DAW-1", password: "daw1.011", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 143, nick: "BRAIBIT-DAW1-012", name: "Alumno 12 DAW-1", password: "daw1.012", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 144, nick: "BRAIBIT-DAW1-013", name: "Alumno 13 DAW-1", password: "daw1.013", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 145, nick: "BRAIBIT-DAW1-014", name: "Alumno 14 DAW-1", password: "daw1.014", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 146, nick: "BRAIBIT-DAW1-015", name: "Alumno 15 DAW-1", password: "daw1.015", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 147, nick: "BRAIBIT-DAW1-016", name: "Alumno 16 DAW-1", password: "daw1.016", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 148, nick: "BRAIBIT-DAW1-017", name: "Alumno 17 DAW-1", password: "daw1.017", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 149, nick: "BRAIBIT-DAW1-018", name: "Alumno 18 DAW-1", password: "daw1.018", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 150, nick: "BRAIBIT-DAW1-019", name: "Alumno 19 DAW-1", password: "daw1.019", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 151, nick: "BRAIBIT-DAW1-020", name: "Alumno 20 DAW-1", password: "daw1.020", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 152, nick: "BRAIBIT-DAW1-021", name: "Alumno 21 DAW-1", password: "daw1.021", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 153, nick: "BRAIBIT-DAW1-022", name: "Alumno 22 DAW-1", password: "daw1.022", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 154, nick: "BRAIBIT-DAW1-023", name: "Alumno 23 DAW-1", password: "daw1.023", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 155, nick: "BRAIBIT-DAW1-024", name: "Alumno 24 DAW-1", password: "daw1.024", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 156, nick: "BRAIBIT-DAW1-025", name: "Alumno 25 DAW-1", password: "daw1.025", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      // AC-1 (25 alumnos)
-      { id: 157, nick: "BRAIBIT-AC1-001", name: "Alumno 1 AC-1", password: "ac1.001", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 158, nick: "BRAIBIT-AC1-002", name: "Alumno 2 AC-1", password: "ac1.002", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 159, nick: "BRAIBIT-AC1-003", name: "Alumno 3 AC-1", password: "ac1.003", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 160, nick: "BRAIBIT-AC1-004", name: "Alumno 4 AC-1", password: "ac1.004", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 161, nick: "BRAIBIT-AC1-005", name: "Alumno 5 AC-1", password: "ac1.005", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 162, nick: "BRAIBIT-AC1-006", name: "Alumno 6 AC-1", password: "ac1.006", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 163, nick: "BRAIBIT-AC1-007", name: "Alumno 7 AC-1", password: "ac1.007", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 164, nick: "BRAIBIT-AC1-008", name: "Alumno 8 AC-1", password: "ac1.008", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 165, nick: "BRAIBIT-AC1-009", name: "Alumno 9 AC-1", password: "ac1.009", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 166, nick: "BRAIBIT-AC1-010", name: "Alumno 10 AC-1", password: "ac1.010", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 167, nick: "BRAIBIT-AC1-011", name: "Alumno 11 AC-1", password: "ac1.011", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 168, nick: "BRAIBIT-AC1-012", name: "Alumno 12 AC-1", password: "ac1.012", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 169, nick: "BRAIBIT-AC1-013", name: "Alumno 13 AC-1", password: "ac1.013", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 170, nick: "BRAIBIT-AC1-014", name: "Alumno 14 AC-1", password: "ac1.014", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 171, nick: "BRAIBIT-AC1-015", name: "Alumno 15 AC-1", password: "ac1.015", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 172, nick: "BRAIBIT-AC1-016", name: "Alumno 16 AC-1", password: "ac1.016", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 173, nick: "BRAIBIT-AC1-017", name: "Alumno 17 AC-1", password: "ac1.017", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 174, nick: "BRAIBIT-AC1-018", name: "Alumno 18 AC-1", password: "ac1.018", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 175, nick: "BRAIBIT-AC1-019", name: "Alumno 19 AC-1", password: "ac1.019", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 176, nick: "BRAIBIT-AC1-020", name: "Alumno 20 AC-1", password: "ac1.020", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 177, nick: "BRAIBIT-AC1-021", name: "Alumno 21 AC-1", password: "ac1.021", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 178, nick: "BRAIBIT-AC1-022", name: "Alumno 22 AC-1", password: "ac1.022", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 179, nick: "BRAIBIT-AC1-023", name: "Alumno 23 AC-1", password: "ac1.023", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 180, nick: "BRAIBIT-AC1-024", name: "Alumno 24 AC-1", password: "ac1.024", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 181, nick: "BRAIBIT-AC1-025", name: "Alumno 25 AC-1", password: "ac1.025", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      // AC-2 (25 alumnos)
-      { id: 182, nick: "BRAIBIT-AC2-001", name: "Alumno 1 AC-2", password: "ac2.001", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 183, nick: "BRAIBIT-AC2-002", name: "Alumno 2 AC-2", password: "ac2.002", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 184, nick: "BRAIBIT-AC2-003", name: "Alumno 3 AC-2", password: "ac2.003", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 185, nick: "BRAIBIT-AC2-004", name: "Alumno 4 AC-2", password: "ac2.004", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 186, nick: "BRAIBIT-AC2-005", name: "Alumno 5 AC-2", password: "ac2.005", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 187, nick: "BRAIBIT-AC2-006", name: "Alumno 6 AC-2", password: "ac2.006", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 188, nick: "BRAIBIT-AC2-007", name: "Alumno 7 AC-2", password: "ac2.007", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 189, nick: "BRAIBIT-AC2-008", name: "Alumno 8 AC-2", password: "ac2.008", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 190, nick: "BRAIBIT-AC2-009", name: "Alumno 9 AC-2", password: "ac2.009", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 191, nick: "BRAIBIT-AC2-010", name: "Alumno 10 AC-2", password: "ac2.010", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 192, nick: "BRAIBIT-AC2-011", name: "Alumno 11 AC-2", password: "ac2.011", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 193, nick: "BRAIBIT-AC2-012", name: "Alumno 12 AC-2", password: "ac2.012", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 194, nick: "BRAIBIT-AC2-013", name: "Alumno 13 AC-2", password: "ac2.013", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 195, nick: "BRAIBIT-AC2-014", name: "Alumno 14 AC-2", password: "ac2.014", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 196, nick: "BRAIBIT-AC2-015", name: "Alumno 15 AC-2", password: "ac2.015", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 197, nick: "BRAIBIT-AC2-016", name: "Alumno 16 AC-2", password: "ac2.016", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 198, nick: "BRAIBIT-AC2-017", name: "Alumno 17 AC-2", password: "ac2.017", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 199, nick: "BRAIBIT-AC2-018", name: "Alumno 18 AC-2", password: "ac2.018", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 200, nick: "BRAIBIT-AC2-019", name: "Alumno 19 AC-2", password: "ac2.019", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 201, nick: "BRAIBIT-AC2-020", name: "Alumno 20 AC-2", password: "ac2.020", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 202, nick: "BRAIBIT-AC2-021", name: "Alumno 21 AC-2", password: "ac2.021", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 203, nick: "BRAIBIT-AC2-022", name: "Alumno 22 AC-2", password: "ac2.022", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 204, nick: "BRAIBIT-AC2-023", name: "Alumno 23 AC-2", password: "ac2.023", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 205, nick: "BRAIBIT-AC2-024", name: "Alumno 24 AC-2", password: "ac2.024", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
-      { id: 206, nick: "BRAIBIT-AC2-025", name: "Alumno 25 AC-2", password: "ac2.025", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 132, nick: "BRAIBIT-DAW1-001", name: "Alumno 1 DAW-1", password: "daw1.001!", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 133, nick: "BRAIBIT-DAW1-002", name: "Alumno 2 DAW-1", password: "daw1.002@", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 134, nick: "BRAIBIT-DAW1-003", name: "Alumno 3 DAW-1", password: "daw1.003#", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 135, nick: "BRAIBIT-DAW1-004", name: "Alumno 4 DAW-1", password: "daw1.004$", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 136, nick: "BRAIBIT-DAW1-005", name: "Alumno 5 DAW-1", password: "daw1.005%", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 137, nick: "BRAIBIT-DAW1-006", name: "Alumno 6 DAW-1", password: "daw1.006&", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 138, nick: "BRAIBIT-DAW1-007", name: "Alumno 7 DAW-1", password: "daw1.007*", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 139, nick: "BRAIBIT-DAW1-008", name: "Alumno 8 DAW-1", password: "daw1.008+", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 140, nick: "BRAIBIT-DAW1-009", name: "Alumno 9 DAW-1", password: "daw1.009=", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 141, nick: "BRAIBIT-DAW1-010", name: "Alumno 10 DAW-1", password: "daw1.010-", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 142, nick: "BRAIBIT-DAW1-011", name: "Alumno 11 DAW-1", password: "daw1.011_", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 143, nick: "BRAIBIT-DAW1-012", name: "Alumno 12 DAW-1", password: "daw1.012?", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 144, nick: "BRAIBIT-DAW1-013", name: "Alumno 13 DAW-1", password: "daw1.013/", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 145, nick: "BRAIBIT-DAW1-014", name: "Alumno 14 DAW-1", password: "daw1.014:", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 146, nick: "BRAIBIT-DAW1-015", name: "Alumno 15 DAW-1", password: "daw1.015;", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 147, nick: "BRAIBIT-DAW1-016", name: "Alumno 16 DAW-1", password: "daw1.016.", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 148, nick: "BRAIBIT-DAW1-017", name: "Alumno 17 DAW-1", password: "daw1.017,", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 149, nick: "BRAIBIT-DAW1-018", name: "Alumno 18 DAW-1", password: "daw1.018!", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 150, nick: "BRAIBIT-DAW1-019", name: "Alumno 19 DAW-1", password: "daw1.019@", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 151, nick: "BRAIBIT-DAW1-020", name: "Alumno 20 DAW-1", password: "daw1.020#", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 152, nick: "BRAIBIT-DAW1-021", name: "Alumno 21 DAW-1", password: "daw1.021$", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 153, nick: "BRAIBIT-DAW1-022", name: "Alumno 22 DAW-1", password: "daw1.022%", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 154, nick: "BRAIBIT-DAW1-023", name: "Alumno 23 DAW-1", password: "daw1.023&", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 155, nick: "BRAIBIT-DAW1-024", name: "Alumno 24 DAW-1", password: "daw1.024*", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 156, nick: "BRAIBIT-DAW1-025", name: "Alumno 25 DAW-1", password: "daw1.025+", role: "student", tokens: 0, class: "DAW-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // AC-1 (26 alumnos)
+      { id: 157, nick: "BRAIBIT-AC1-001", name: "Alumno 1 AC-1", password: "ac1.001!", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 158, nick: "BRAIBIT-AC1-002", name: "Alumno 2 AC-1", password: "ac1.002@", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 159, nick: "BRAIBIT-AC1-003", name: "Alumno 3 AC-1", password: "ac1.003#", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 160, nick: "BRAIBIT-AC1-004", name: "Alumno 4 AC-1", password: "ac1.004$", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 161, nick: "BRAIBIT-AC1-005", name: "Alumno 5 AC-1", password: "ac1.005%", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 162, nick: "BRAIBIT-AC1-006", name: "Alumno 6 AC-1", password: "ac1.006&", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 163, nick: "BRAIBIT-AC1-007", name: "Alumno 7 AC-1", password: "ac1.007*", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 164, nick: "BRAIBIT-AC1-008", name: "Alumno 8 AC-1", password: "ac1.008+", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 165, nick: "BRAIBIT-AC1-009", name: "Alumno 9 AC-1", password: "ac1.009=", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 166, nick: "BRAIBIT-AC1-010", name: "Alumno 10 AC-1", password: "ac1.010-", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 167, nick: "BRAIBIT-AC1-011", name: "Alumno 11 AC-1", password: "ac1.011_", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 168, nick: "BRAIBIT-AC1-012", name: "Alumno 12 AC-1", password: "ac1.012?", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 169, nick: "BRAIBIT-AC1-013", name: "Alumno 13 AC-1", password: "ac1.013/", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 170, nick: "BRAIBIT-AC1-014", name: "Alumno 14 AC-1", password: "ac1.014:", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 171, nick: "BRAIBIT-AC1-015", name: "Alumno 15 AC-1", password: "ac1.015;", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 172, nick: "BRAIBIT-AC1-016", name: "Alumno 16 AC-1", password: "ac1.016.", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 173, nick: "BRAIBIT-AC1-017", name: "Alumno 17 AC-1", password: "ac1.017,", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 174, nick: "BRAIBIT-AC1-018", name: "Alumno 18 AC-1", password: "ac1.018!", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 175, nick: "BRAIBIT-AC1-019", name: "Alumno 19 AC-1", password: "ac1.019@", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 176, nick: "BRAIBIT-AC1-020", name: "Alumno 20 AC-1", password: "ac1.020#", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 177, nick: "BRAIBIT-AC1-021", name: "Alumno 21 AC-1", password: "ac1.021$", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 178, nick: "BRAIBIT-AC1-022", name: "Alumno 22 AC-1", password: "ac1.022%", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 179, nick: "BRAIBIT-AC1-023", name: "Alumno 23 AC-1", password: "ac1.023&", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 180, nick: "BRAIBIT-AC1-024", name: "Alumno 24 AC-1", password: "ac1.024*", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 181, nick: "BRAIBIT-AC1-025", name: "Alumno 25 AC-1", password: "ac1.025+", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 182, nick: "BRAIBIT-AC1-026", name: "Alumno 26 AC-1", password: "ac1.026=", role: "student", tokens: 0, class: "AC-1", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      // AC-2 (26 alumnos)
+      { id: 183, nick: "BRAIBIT-AC2-001", name: "Alumno 1 AC-2", password: "ac2.001!", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 184, nick: "BRAIBIT-AC2-002", name: "Alumno 2 AC-2", password: "ac2.002@", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 185, nick: "BRAIBIT-AC2-003", name: "Alumno 3 AC-2", password: "ac2.003#", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 186, nick: "BRAIBIT-AC2-004", name: "Alumno 4 AC-2", password: "ac2.004$", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 187, nick: "BRAIBIT-AC2-005", name: "Alumno 5 AC-2", password: "ac2.005%", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 188, nick: "BRAIBIT-AC2-006", name: "Alumno 6 AC-2", password: "ac2.006&", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 189, nick: "BRAIBIT-AC2-007", name: "Alumno 7 AC-2", password: "ac2.007*", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 190, nick: "BRAIBIT-AC2-008", name: "Alumno 8 AC-2", password: "ac2.008+", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 191, nick: "BRAIBIT-AC2-009", name: "Alumno 9 AC-2", password: "ac2.009=", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 192, nick: "BRAIBIT-AC2-010", name: "Alumno 10 AC-2", password: "ac2.010-", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 193, nick: "BRAIBIT-AC2-011", name: "Alumno 11 AC-2", password: "ac2.011_", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 194, nick: "BRAIBIT-AC2-012", name: "Alumno 12 AC-2", password: "ac2.012?", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 195, nick: "BRAIBIT-AC2-013", name: "Alumno 13 AC-2", password: "ac2.013/", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 196, nick: "BRAIBIT-AC2-014", name: "Alumno 14 AC-2", password: "ac2.014:", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 197, nick: "BRAIBIT-AC2-015", name: "Alumno 15 AC-2", password: "ac2.015;", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 198, nick: "BRAIBIT-AC2-016", name: "Alumno 16 AC-2", password: "ac2.016.", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 199, nick: "BRAIBIT-AC2-017", name: "Alumno 17 AC-2", password: "ac2.017,", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 200, nick: "BRAIBIT-AC2-018", name: "Alumno 18 AC-2", password: "ac2.018!", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 201, nick: "BRAIBIT-AC2-019", name: "Alumno 19 AC-2", password: "ac2.019@", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 202, nick: "BRAIBIT-AC2-020", name: "Alumno 20 AC-2", password: "ac2.020#", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 203, nick: "BRAIBIT-AC2-021", name: "Alumno 21 AC-2", password: "ac2.021$", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 204, nick: "BRAIBIT-AC2-022", name: "Alumno 22 AC-2", password: "ac2.022%", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 205, nick: "BRAIBIT-AC2-023", name: "Alumno 23 AC-2", password: "ac2.023&", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 206, nick: "BRAIBIT-AC2-024", name: "Alumno 24 AC-2", password: "ac2.024*", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 207, nick: "BRAIBIT-AC2-025", name: "Alumno 25 AC-2", password: "ac2.025+", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
+      { id: 208, nick: "BRAIBIT-AC2-026", name: "Alumno 26 AC-2", password: "ac2.026=", role: "student", tokens: 0, class: "AC-2", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() },
       // DEMO
-      { id: 207, nick: "DEMO-TUTOR", name: "Vista Demo", password: "DemoVista2025!", role: "student", tokens: 100, class: "Demo", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
+      { id: 209, nick: "DEMO-TUTOR", name: "Vista Demo", password: "DemoVista2025!", role: "student", tokens: 100, class: "Demo", ethAddress: generateEthAddress(), seedPhrase: generateSeedPhrase() }
     ];
 
     const initialTasks = [
@@ -482,6 +485,67 @@ const BraiBitEcosystem = () => {
     showNotification(`✅ Transferencia exitosa!\n\n💸 Enviaste ${formatNumber(amount)} ${CURRENCY_SYMBOL}\n👤 A: ${recipient.name || recipient.nick}\n⛽ Gas: ${gasFee.toFixed(2)} ${CURRENCY_SYMBOL}\n📝 Hash: ${formatAddress(newTx.hash)}`, 'success');
   };
 
+  // Revert transaction (only for tutors)
+  const revertTransaction = (txId) => {
+    if (currentUser.role !== 'tutor') {
+      showNotification('❌ Solo los tutores pueden revertir transacciones', 'error');
+      return;
+    }
+
+    const tx = transactions.find(t => t.id === txId);
+    if (!tx) {
+      showNotification('❌ Transacción no encontrada', 'error');
+      return;
+    }
+
+    if (tx.reverted) {
+      showNotification('❌ Esta transacción ya fue revertida', 'error');
+      return;
+    }
+
+    // Only allow reverting task_reward and transfer types
+    if (tx.type !== 'task_reward' && tx.type !== 'transfer') {
+      showNotification('❌ Solo se pueden revertir asignaciones de tareas y transferencias', 'error');
+      return;
+    }
+
+    if (!window.confirm(`¿Revertir esta transacción?\n\nAlumno: ${tx.toName}\nCantidad: ${formatNumber(tx.amount)} ${CURRENCY_SYMBOL}\nDescripción: ${tx.description}\n\nEsto quitará los BB al alumno.`)) {
+      return;
+    }
+
+    // Find the recipient (student who received the tokens)
+    const recipient = [...users, ...tutors].find(u => u.ethAddress === tx.to);
+    if (!recipient) {
+      showNotification('❌ Destinatario no encontrado', 'error');
+      return;
+    }
+
+    if (recipient.tokens < tx.amount) {
+      showNotification(`❌ El alumno no tiene suficientes BB para revertir (tiene ${formatNumber(recipient.tokens)} ${CURRENCY_SYMBOL})`, 'error');
+      return;
+    }
+
+    // Update balances
+    const updatedUsers = users.map(u => {
+      if (u.ethAddress === tx.to) {
+        return { ...u, tokens: u.tokens - tx.amount };
+      }
+      return u;
+    });
+
+    // Mark transaction as reverted
+    const updatedTransactions = transactions.map(t => {
+      if (t.id === txId) {
+        return { ...t, reverted: true, revertedAt: new Date().toISOString(), revertedBy: currentUser.name };
+      }
+      return t;
+    });
+
+    setUsers(updatedUsers);
+    setTransactions(updatedTransactions);
+    showNotification(`✅ Transacción revertida\n\nSe quitaron ${formatNumber(tx.amount)} ${CURRENCY_SYMBOL} a ${tx.toName}`, 'success');
+  };
+
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(''), 4000);
@@ -665,6 +729,7 @@ const BraiBitEcosystem = () => {
               assignTaskReward={assignTaskReward}
               purchaseItem={purchaseItem}
               transferToStudent={transferToStudent}
+              revertTransaction={revertTransaction}
               CURRENCY_SYMBOL={CURRENCY_SYMBOL}
               calculateGasFee={calculateGasFee}
               formatNumber={formatNumber}
@@ -951,6 +1016,7 @@ const WalletView = ({
   assignTaskReward,
   purchaseItem,
   transferToStudent,
+  revertTransaction,
   CURRENCY_SYMBOL,
   calculateGasFee,
   formatNumber,
@@ -1138,6 +1204,8 @@ const WalletView = ({
           currentUser={currentUser} 
           CURRENCY_SYMBOL={CURRENCY_SYMBOL}
           formatNumber={formatNumber}
+          formatAddress={formatAddress}
+          revertTransaction={revertTransaction}
         />
       )}
     </div>
@@ -1737,7 +1805,7 @@ const TransferTab = ({ users, currentUser, onTransfer, CURRENCY_SYMBOL, calculat
 // HISTORY TAB
 // ============================================
 
-const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }) => {
+const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber, formatAddress, revertTransaction }) => {
   const [filter, setFilter] = useState('all');
 
   const filteredTx = filter === 'all' 
@@ -1780,17 +1848,24 @@ const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }
         <div className="space-y-3">
           {filteredTx.map(tx => {
             const isReceived = tx.to === currentUser.ethAddress;
+            const isTutor = currentUser.role === 'tutor';
+            const canRevert = isTutor && !isReceived && !tx.reverted && (tx.type === 'task_reward' || tx.type === 'transfer');
+            
             return (
               <div 
                 key={tx.id} 
                 className={`bg-white/5 rounded-xl p-4 border-2 transition hover:scale-102 ${
-                  isReceived ? 'border-green-500/30 hover:border-green-500/50' : 'border-red-500/30 hover:border-red-500/50'
+                  tx.reverted 
+                    ? 'border-gray-500/30 opacity-60'
+                    : isReceived ? 'border-green-500/30 hover:border-green-500/50' : 'border-red-500/30 hover:border-red-500/50'
                 }`}
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center gap-3 flex-1">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      isReceived ? 'bg-green-500/20' : 'bg-red-500/20'
+                      tx.reverted 
+                        ? 'bg-gray-500/20'
+                        : isReceived ? 'bg-green-500/20' : 'bg-red-500/20'
                     }`}>
                       {isReceived ? (
                         <ArrowDownRight className="w-6 h-6 text-green-400" />
@@ -1799,20 +1874,40 @@ const HistoryTab = ({ transactions, currentUser, CURRENCY_SYMBOL, formatNumber }
                       )}
                     </div>
                     <div className="flex-1">
-                      <p className={`font-bold text-lg ${isReceived ? 'text-green-400' : 'text-red-400'}`}>
-                        {isReceived ? 'Recibido' : 'Enviado'}
+                      <p className={`font-bold text-lg ${
+                        tx.reverted 
+                          ? 'text-gray-400'
+                          : isReceived ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {tx.reverted ? '⚠️ Revertida' : isReceived ? 'Recibido' : 'Enviado'}
                       </p>
                       <p className="text-white font-semibold">{tx.description}</p>
                       <p className="text-gray-400 text-sm">
                         {isReceived ? `De: ${tx.fromName}` : `A: ${tx.toName}`}
                       </p>
+                      {tx.reverted && (
+                        <p className="text-orange-400 text-xs mt-1">
+                          Revertida por {tx.revertedBy} el {new Date(tx.revertedAt).toLocaleDateString()}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-white font-mono text-2xl font-bold">
+                    <p className={`font-mono text-2xl font-bold ${
+                      tx.reverted ? 'text-gray-400 line-through' : 'text-white'
+                    }`}>
                       {isReceived ? '+' : '-'}{formatNumber(tx.amount)} {CURRENCY_SYMBOL}
                     </p>
                     <p className="text-gray-400 text-xs">Gas: {tx.gasFee.toFixed(2)} {CURRENCY_SYMBOL}</p>
+                    
+                    {canRevert && (
+                      <button
+                        onClick={() => revertTransaction(tx.id)}
+                        className="mt-2 px-3 py-1 bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 text-red-400 rounded-lg text-xs font-semibold transition flex items-center gap-1"
+                      >
+                        ❌ Revertir
+                      </button>
+                    )}
                   </div>
                 </div>
                 
